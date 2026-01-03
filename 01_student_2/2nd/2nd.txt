@@ -1,0 +1,66 @@
+http 프로토콜
+
+Web Method
+GET: 파일요청, 리소스 조회
+POST: 데이터 보낼 때
+
+OPTIONS: 사용 가능한 메서드를 보여줌
+> head, body 등등
+
+그 외
+PUT, PATCH, DELETE 등
+
+★ Restful 개발 방식 ★
+
+
+
+Burp Suite의 Repeater
+Request
+Host: 웹 서버 주소
+User-Agent: 접속한 유저의 정보(?)
+Referer: 요청의 일어난 지점을 알려줌
+
+Respones
+서버 상태
+2--: 정상
+3--: 이동, 리다이렉션 - 로케이션(어디로 가는지)써 있음
+4--: 사용자 잘못
+5--: 서버 잘못
+
+Server: 서버 정보가 나옴
+가릴 순 있지만
+에러를 발생시켜 서버 정보를 나오게 할 수 있음
+나오는 곳이 좀 있다
+
+
+
+Database
+table: 저장할 여러 정보들
+컬럼: 이름, 아이디, 비밀번호 등 구분해서 저장
+행: 저장되어있는 수
+
+
+DDL - Data Definition Language
+CREATE, DROP, ALTER
+
+DML - Data Manipulation Language
+SELECT, INSERTM UPDATE, DELETE
+
+DCL - Data Control Language
+GRANT, REVOKE
+
+
+
+--------------------------------
+과제
+
+1. 복습
+2. SQL - select 정리
+3. 로그인페이지 DB연결
+
+4. 회원가입 페이지 만들기
+5. 게시판 만들기 > 로그인 성공시 게시판 페이지로
+6. 게시판 모든?기능 만들었다면 SQL Injection
+
+
+-----------------------------
