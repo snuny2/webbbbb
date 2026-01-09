@@ -62,9 +62,9 @@ GET방식이라 위험해요..!
 >> form 태그를 써서 다른 사람의 정보를 얻을 수 있었음
 
 <form method="POST" action="공격 주소" id="csrfform" target="iframe Id">
-<input type"hidden" name="id" />
-<input type"hidden" name="info" />
-<input type"hidden" name="pw" value="qwas" />
+<input type="hidden" name="id" />
+<input type="hidden" name="info" />
+<input type="hidden" name="pw" value="qwas" />
 <button type="submit">클릭</button>
 </form>
 
@@ -155,5 +155,8 @@ CSRF 마무리
 
 2. CSRF CTF 문제 1~3번
 
+XSS 챌린지
+로그인 후 게시판에서 검색시 검색어가 보이지만 값을 저장 후 보여주는 거라 보이진 않지만 <script>alert(1)</script>입력시 1일 출력이 됨
+그러니 alert대신 넣어보자
 
 3. 웹 개발 마무리

@@ -1,0 +1,140 @@
+포트폴리오
+> 블로그나 깃허브 처럼 뭘 했는지 볼 수 있는 증거
+
+
+
+하나만 하지말고 다른 방식으로 될거같다면 다른 방식으로 개발 / 보안을 해보기
+
+
+
+CSRF
+> 요청을 위조
+> 피해자가 의도치 않은 요청을 보내게 함
+
+XSS
+> 악성 코드를 보냄
+
+
+CSRF / XSS 차이
+CSRF는 서버 공격
+XSS는 클라이언트 공격
+으로 정리 되어있는 곳이 있지만 
+둘다 클라이언트 공격임
+>근데 xss랑 비교시 서버공격으로 구분(?)
+
+> 그러니
+CSRF는 피해자가 요청을 보내게 하는 것
+XSS는 코드를 삽입해서 기다리는 것(?)
+
+
+
+CSRF 기본 공격
+csrf_prac
+요청이 있으면 csrf가 일어날 수 있어 요청이 있는 곳을 
+하나하나 전부 찾아봐야함
+
+비밀번호 수정 url을 만들었는데 주소가 길어서 의심스러우니
+쇼츠url 이란 사이트로 짧은 url로 만들 수 있음
+
+> 파라미터가 GET방식이라 CSRF취약점이 있는거야!
+>> 그러니 POST방식으로 바꾸면 됨
+
+csrf_postMethod
+get방식으로 url을 변경 후 해보면 안됨
+> form태그를 사용하여 버튼을 누르게 하거나
+드래그 등을 이용하여 가능함
+> iframe태그를 넣으면 alert까지 안뜨게 할 수도 있음
+>> 공격자라고 생각하고 해보기
+
+>> 그래서 나온게 SCRF 토큰
+
+csrf_csrfToken
+POST방식 + csrf토큰이 같이 있음
+> csrf토큰은 접속마다 바뀜
+> iframe태그를 사용하여 우회가 가능함
+>> iframe태그로 마이페이지를 불러오고 DOM기법으로 csrf 토큰에 접근
+
+document.getElementById('iframe id').contentDocument.forms[0].csrf_token.value
+로 csrf 토큰을 가져올 수 있음
+
+함수를 추가하여 alert가 나오는지 확인 후 form태그를 추가 후 
+가져온 csrf토큰을 넣고싶은 곳에 넣을 수 있음
+
+document.getElementById('form / input id').value=설정한 토큰 함수;
+document.getElementById('form id').submit;
+이렇게 토큰을 넣을 수 있음
+알림을 안뜨게 만들거면 iframe태그에 sendbox를 넣으면 됨
+기본 sendbox가 allow-forms 지만 넣어도됨
+
+> 이러면 POST방식도 문제가 있는거니 출처가 있으면 어떨까
+
+csrf_refererCheck
+> 레퍼러는 우회가 될까?
+
+
+scrf4 풀어보기 > 26/01/07 지금 뭔가뭔가 상태
+레퍼러요청으로 넘어가지게 했지만
+레퍼러 없이 요청을 보내거나 레퍼러를 지우면 요청검사를 하지않고
+넘어가는 일이 생김
+> 생각보다 많이 일어나는 일
+
+meta태그를 사용하거나 
+<meta name="asd" content="no-referrer">
+form태그에 레퍼러를 안넣을 수 가있음
+<form ~~~~ referrerpolicy="no-referrer">
+이렇게 쓰면 레퍼러를 안보낼 수 있음
+
+
+
+그럼 CSRF는 어떻게 막아야하나
+> 공격자, 해커가 그 요청을 미리 작성하지 못하게 만들면 됨
+
+>> 2차 보안이나 비밀번호를 한번더 확인하는것이 그 이유임
+
+
+
+캡차
+> 자동화 공격을 막기위해 나옴
+
+
+sec-fetch-site, sec-fetch-user 이건 뭘까
+
+
+
+SOP 정책
+Same origin Policy
+자바스크립트로 로드된 다른 출처의 리소스를 접근할 수 없음
+img, video, script src 빼고
+
+
+다른 사이트로 요청을 보내는 걸 막아줌
+> 그럼 같은 기준은? 
+domain / scheme / post
+이렇게 3가지가 같아야함
+
+> 이러니 해커들만이 아닌 개발자들고 어려워져서
+다른 도메인에서 리소스를 쓸 수 있게 CORS를 사용하게함
+Cross Origin Resource Sharing
+>> ACAO (Access Control Allow Origin)
+지금 응답하는 정보들을 사용해도 되는 도메인을 account control allow origin 헤더를 넣어 응답함
+
+브라우저는 acao 헤더를 참고해서 지금 페이지의 도메인이 이 리소스를 
+접근해도 되는지 판단하고 컨트롤함
+
+
+
+
+--------------------------------
+과제
+
+1. CSRF 문제
+
+2. CSRF 문제의 케이스로 웹 개발
+> CSRF 정리. 공격자라는 생각으로.
+
+3. 웹 개발 마무리
+
+
+
+sqli 보충
+01/17 토 오후 1시

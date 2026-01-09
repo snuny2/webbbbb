@@ -105,11 +105,21 @@ xss는 자바스크립트뿐만 아니라 html태그도 넣을 수 있음
 
 마이페이지에서 일어났다면
 > 마이페이지에 저장된 개인정보 탈취가능
+>> 페이지에서 개발자모드로 코드를 확인하여 태그별 id를 확인하여
+document.getElementById('id') 로 해당 값을 확인 할 수 있음
+document.getElementByclassName('name')도 있음. 
+document.getElementByclassName('name') [0] 이렇게 가져올 @번째걸 가져올 수 있음
+document.getElementByclassName('name') [0].id / innerHTML 등 이렇게 해당 값을 가져올 수 있음
+
 
 
 다른페이지의 정보를 가져올 수 있음
 > iframe 태그사용. 새로운 창을 띄워서 그 페이지를 볼 수 있음
 <iframe src="마이페이지 주소" id=""></iframe>
+> iframe으로 정보를 탈취할 주소를 띄우고 개발자모드로 DOM기법을 
+사용하여 
+document.getElementById('asd').contentDocument.getElementBy~~
+이렇게 접근할 수 있음
 
 
 
