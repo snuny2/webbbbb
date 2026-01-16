@@ -63,7 +63,7 @@ document.getElementById('iframe id').contentDocument.forms[0].csrf_token.value
 document.getElementById('form / input id').value=설정한 토큰 함수;
 document.getElementById('form id').submit;
 이렇게 토큰을 넣을 수 있음
-알림을 안뜨게 만들거면 iframe태그에 sendbox를 넣으면 됨
+알림을 안뜨게 만들거면 iframe태그에 sandbox를 넣으면 됨
 기본 sendbox가 allow-forms 지만 넣어도됨
 
 > 이러면 POST방식도 문제가 있는거니 출처가 있으면 어떨까
@@ -72,7 +72,7 @@ csrf_refererCheck
 > 레퍼러는 우회가 될까?
 
 
-scrf4 풀어보기 > 26/01/07 지금 뭔가뭔가 상태
+csrf4 풀어보기 > 26/01/07 지금 뭔가뭔가 상태
 레퍼러요청으로 넘어가지게 했지만
 레퍼러 없이 요청을 보내거나 레퍼러를 지우면 요청검사를 하지않고
 넘어가는 일이 생김

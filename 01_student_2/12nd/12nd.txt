@@ -74,7 +74,7 @@ GET방식이라 위험해요..!
 script태그를 넣어서 자동으로 버튼을 누르게 할 수 있음
 
 <script>
-document.getElementById('form id값').submit():
+document.getElementById('form id값').submit();
 </script>
 
 
@@ -154,6 +154,20 @@ CSRF 마무리
 
 
 2. CSRF CTF 문제 1~3번
+csrf 1
+iframe에 높이와 너비를 안보이게 하고 sandbox로 조건을 붙인다
+
+
+csrf 2
+get방식이 아닌 post방식인 form태그를 이용
+
+
+csrf 3
+iframe로 토큰을 얻고, 값을 넣고 업데이트페이지로 접근하게 한다
+
+
+
+
 
 XSS 챌린지
 로그인 후 게시판에서 검색시 검색어가 보이지만 값을 저장 후 보여주는 거라 보이진 않지만 <script>alert(1)</script>입력시 1일 출력이 됨

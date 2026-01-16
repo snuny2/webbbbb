@@ -142,11 +142,22 @@ document.getElementById('asd').contentDocument.getElementBy~~
 steal info (ifarme사용)
 > 플래그가 있는 사이트가 있지만 권한이 없고 유사한 사이트가 주어짐
 
+게시글에 iframe로 id와 onload를 사용
+<script>로 document.로 iframe의 id를 불러오고 contentDocument.로 iframe로 불러온 사이트의 클래스이름을 가져옴 [@]로 가져올 번째꺼 가져옴
+그리고 var i 로 이미지를 가져옴.
+
+
 steal info 2 (ifarme사용)
 > 게시판에 있음
+1이랑 같음
+
 
 Basic sctipt Pirac (ifarme미사용)
 > 개인정보페이지의 두번째 인풋
+개인정보의 처음칸인 user와 두번째칸인 정보칸 사이에 script를 넣으면 되는데
+document.~~ 로는 두번째칸이 실행 전이라 오류가 남
+그래서 난 페이지가 다 로딩된 후 스크립트를 실행할 수 있게
+document.addEventListener("DOMContentLoaded",function () {스크립트 내용;});
 
 
 
