@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #007bff;
+  padding: 12px 30px;
+  color: white;
+}
+
+.nav {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.navbar_menu {
+  list-style: none;
+  display: flex;
+  float: right;
+  gap: 20px;
+}
+
+.navbar_menu li a {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.navbar_menu li a:hover {
+  text-decoration: underline;
+}
+
+.navbar_user a {
+  color: #f1c40f;
+  text-decoration: none;
+}
+
+.logout_btn {
+  background: none;
+  border: none;
+  color: #f1c40f;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.logout_btn:hover {
+  text-decoration: underline;
+}

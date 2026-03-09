@@ -1,0 +1,77 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  background-color: #f4f7fa;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup_form {
+  width: 350px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.signup_form h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+.signup_form input {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+}
+
+.signup_form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.signup_form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.signup_form button:hover {
+  background-color: #0056b3;
+}
+
+.signup_form .message {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #555;
+}
+
+.message {
+  white-space: pre-line;
+  color: #d11a2a;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
