@@ -1,0 +1,48 @@
+.board_con {
+  width: 800px;
+  margin: 40px auto;
+}
+
+.board_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board_table th,
+.board_table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.board_table th {
+  background: #007bff;
+  color: white;
+}
+
+.board_table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.write {
+  margin-top: 15px;
+  padding: 8px 15px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.write:hover {
+  background: #2980b9;
+}
+
+.post_link {
+  text-decoration: none;
+  color: #2c3e50;
+}
+
+.post_link:hover {
+  text-decoration: underline;
+}
