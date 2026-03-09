@@ -1,0 +1,40 @@
+.edit_con {
+  width: 800px;
+  margin: 40px auto;
+}
+
+.edit_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit_form input,
+.edit_form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.edit_form textarea {
+  min-height: 300px;
+  resize: vertical;
+}
+
+.edit_form button {
+  width: 120px;
+  padding: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+  white-space: pre-line;
+}

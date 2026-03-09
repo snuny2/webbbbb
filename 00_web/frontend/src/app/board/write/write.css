@@ -1,0 +1,48 @@
+.write_con {
+  width: 800px;
+  margin: 40px auto;
+}
+
+.write_con h1 {
+  margin-bottom: 20px;
+}
+
+.write_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.write_form input,
+.write_form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.write_form textarea {
+  min-height: 300px;
+  resize: vertical;
+}
+
+.write_form button {
+  width: 120px;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.write_form button:hover {
+  background: #007bff;
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+  white-space: pre-line;
+}

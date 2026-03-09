@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreatePostDto } from 'src/users/dto/create_post.dto';
-import { UpdatePostDto } from 'src/users/dto/update_post.dto';
+import { CreatePostDto } from 'src/dto/create_post.dto';
+import { UpdatePostDto } from 'src/dto/update_post.dto';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 
@@ -19,7 +19,7 @@ export class PostsService {
         });
     }
 
-    async findNum(id: number) {
+    async findOne(id: number) {
         const post = await this.postsRepo.findOne({
             where: { id },
             relations: ['author'],
@@ -35,17 +35,6 @@ export class PostsService {
         return post;
     }
 
-    async create(dto: CreatePostDto, user: any) {
-        const post = this.postsRepo.create({
-            title: dto.title,
-            content: dto.content,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-            authorId: user.sub,
-        });
-
-        return this.postsRepo.save(post);
-    }
-
     async findOneWithoutIncrease(id: number) {
         const post = await this.postsRepo.findOne({
             where: { id },
@@ -57,6 +46,19 @@ export class PostsService {
         }
 
         return post;
+    }
+
+    async create(dto: CreatePostDto, user: any) {
+        const post = this.postsRepo.create({
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            title: dto.title,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            content: dto.content,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+            authorId: user.sub,
+        });
+
+        return await this.postsRepo.save(post);
     }
 
     async update(id: number, dto: UpdatePostDto, user: any) {

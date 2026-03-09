@@ -28,7 +28,7 @@ let PostsService = class PostsService {
             order: { id: 'DESC' },
         });
     }
-    async findNum(id) {
+    async findOne(id) {
         const post = await this.postsRepo.findOne({
             where: { id },
             relations: ['author'],
@@ -40,14 +40,6 @@ let PostsService = class PostsService {
         await this.postsRepo.save(post);
         return post;
     }
-    async create(dto, user) {
-        const post = this.postsRepo.create({
-            title: dto.title,
-            content: dto.content,
-            authorId: user.sub,
-        });
-        return this.postsRepo.save(post);
-    }
     async findOneWithoutIncrease(id) {
         const post = await this.postsRepo.findOne({
             where: { id },
@@ -57,6 +49,14 @@ let PostsService = class PostsService {
             throw new common_1.NotFoundException('게시글을 찾을 수 없습니다.');
         }
         return post;
+    }
+    async create(dto, user) {
+        const post = this.postsRepo.create({
+            title: dto.title,
+            content: dto.content,
+            authorId: user.sub,
+        });
+        return await this.postsRepo.save(post);
     }
     async update(id, dto, user) {
         const post = await this.postsRepo.findOne({ where: { id } });

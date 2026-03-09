@@ -18,22 +18,22 @@ class CreateUserDto {
 }
 exports.CreateUserDto = CreateUserDto;
 __decorate([
-    (0, class_validator_1.IsString)({ message: '이름을 입력해주세요.' }),
-    (0, class_validator_1.MinLength)(2, { message: '이름은 최소 2자 이상이어야 합니다.' }),
-    (0, class_validator_1.MaxLength)(30, { message: '이름은 최대 30자까지 가능합니다.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(2),
+    (0, class_validator_1.MaxLength)(30),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "name", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: '아이디를 입력해주세요.' }),
-    (0, class_validator_1.MinLength)(4, { message: '아이디는 최소 4자 이상이어야 합니다.' }),
-    (0, class_validator_1.MaxLength)(30, { message: '아이디는 최대 30자까지 가능합니다.' }),
-    (0, class_validator_1.Matches)(/^[a-zA-Z0-9_]+$/, { message: '아이디는 영문/숫자/밑줄(_)만 가능합니다.' }),
+    (0, class_validator_1.IsString)(),
+    (0, class_validator_1.MinLength)(4),
+    (0, class_validator_1.MaxLength)(30),
+    (0, class_validator_1.Matches)(/^[a-zA-Z0-9_]+$/, { message: '아이디는 영문/숫자/밑줄만 가능합니다.' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "userId", void 0);
 __decorate([
-    (0, class_validator_1.IsString)({ message: '비밀번호를 입력해주세요.' }),
+    (0, class_validator_1.IsString)(),
     (0, class_validator_1.MinLength)(8, { message: '비밀번호는 최소 8자 이상이어야 합니다.' }),
-    (0, class_validator_1.MaxLength)(64, { message: '비밀번호는 최대 64자까지 가능합니다.' }),
+    (0, class_validator_1.MaxLength)(64),
     (0, class_validator_1.Matches)(/^(?=.*[A-Za-z])(?=.*\d).+$/, { message: '비밀번호는 영문과 숫자를 포함해야 합니다.' }),
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);

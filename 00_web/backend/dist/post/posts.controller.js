@@ -11,12 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostsController = void 0;
 const common_1 = require("@nestjs/common");
+const express_1 = __importDefault(require("express"));
 const posts_service_1 = require("./posts.service");
-const create_post_dto_1 = require("../users/dto/create_post.dto");
-const update_post_dto_1 = require("../users/dto/update_post.dto");
+const create_post_dto_1 = require("../dto/create_post.dto");
+const update_post_dto_1 = require("../dto/update_post.dto");
 let PostsController = class PostsController {
     postsService;
     constructor(postsService) {
@@ -25,8 +29,11 @@ let PostsController = class PostsController {
     async findAll() {
         return this.postsService.findAll();
     }
-    async findOne(id) {
-        return this.postsService.findNum(id);
+    findOne(id) {
+        return this.postsService.findOne(id);
+    }
+    async findOneForEdit(id) {
+        return this.postsService.findOneWithoutIncrease(id);
     }
     async create(dto, req) {
         const user = req.user;
@@ -53,14 +60,21 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], PostsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)(':id/edit'),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PostsController.prototype, "findOneForEdit", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_post_dto_1.CreatePostDto, Request]),
+    __metadata("design:paramtypes", [create_post_dto_1.CreatePostDto, Object]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "create", null);
 __decorate([
@@ -69,8 +83,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, update_post_dto_1.UpdatePostDto,
-        Request]),
+    __metadata("design:paramtypes", [Number, update_post_dto_1.UpdatePostDto, Object]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "update", null);
 __decorate([
@@ -78,7 +91,7 @@ __decorate([
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, Request]),
+    __metadata("design:paramtypes", [Number, Object]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "remove", null);
 exports.PostsController = PostsController = __decorate([

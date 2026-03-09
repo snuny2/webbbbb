@@ -12,11 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
+exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
-const create_user_dto_1 = require("./dto/create_user.dto");
-let UserController = class UserController {
+const create_user_dto_1 = require("../dto/create_user.dto");
+let UsersController = class UsersController {
     usersService;
     constructor(usersService) {
         this.usersService = usersService;
@@ -26,7 +26,7 @@ let UserController = class UserController {
         return { success: true, user };
     }
 };
-exports.UserController = UserController;
+exports.UsersController = UsersController;
 __decorate([
     (0, common_1.Post)('signup'),
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
@@ -34,9 +34,9 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", Promise)
-], UserController.prototype, "signUp", null);
-exports.UserController = UserController = __decorate([
+], UsersController.prototype, "signUp", null);
+exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [users_service_1.UsersService])
-], UserController);
+], UsersController);
 //# sourceMappingURL=users.controller.js.map
