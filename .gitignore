@@ -1,27 +1,18 @@
 # dependencies
 node_modules/
-backend/node_modules/
-frontend/node_modules/
+**/node_modules/
 
-# pnpm
-.pnpm-store/
-pnpm-store/
+# build output
+**/dist/
+**/.next/
+**/out/
+**/.turbo/
+**/coverage/
 
-# Next.js
-frontend/.next/
-.next/
-out/
-.turbo/
-
-# NestJS / build
-backend/dist/
-dist/
-build/
-
-# coverage
-coverage/
-backend/coverage/
-frontend/coverage/
+# env
+.env
+**/.env
+*.env
 
 # logs
 npm-debug.log*
@@ -29,11 +20,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# env
-.env
-*.env
-backend/.env
-frontend/.env
+# typescript
+*.tsbuildinfo
 
 # editor / os
 .vscode/
@@ -41,9 +29,5 @@ frontend/.env
 .DS_Store
 Thumbs.db
 
-# typescript
-*.tsbuildinfo
-
-# misc
-tmp/
-temp/
+# lockfiles you do NOT want if using pnpm only
+package-lock.json
