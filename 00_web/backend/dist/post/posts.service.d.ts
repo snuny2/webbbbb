@@ -5,7 +5,13 @@ import { Post } from './post.entity';
 export declare class PostsService {
     private readonly postsRepo;
     constructor(postsRepo: Repository<Post>);
-    findAll(): Promise<Post[]>;
+    findAll(page: number, limit: number): Promise<{
+        items: Post[];
+        total: number;
+        currentPage: number;
+        totalPages: number;
+        limit: number;
+    }>;
     findOne(id: number): Promise<Post>;
     findOneWithoutIncrease(id: number): Promise<Post>;
     create(dto: CreatePostDto, user: any): Promise<Post>;

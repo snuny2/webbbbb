@@ -16,11 +16,13 @@ const posts_module_1 = require("./post/posts.module");
 const jwt_middleware_1 = require("./auth/jwt.middleware");
 const post_entity_1 = require("./post/post.entity");
 const me_controller_1 = require("./me.controller");
+const comment_entity_1 = require("./post/comments/comment.entity");
+const comment_module_1 = require("./post/comments/comment.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(jwt_middleware_1.jwtMiddleware)
-            .forRoutes({ path: 'posts', method: common_1.RequestMethod.POST }, { path: 'posts/:id', method: common_1.RequestMethod.PATCH }, { path: 'posts/:id', method: common_1.RequestMethod.DELETE }, { path: 'me', method: common_1.RequestMethod.GET });
+            .forRoutes({ path: 'posts', method: common_1.RequestMethod.POST }, { path: 'posts/:id', method: common_1.RequestMethod.PATCH }, { path: 'posts/:id', method: common_1.RequestMethod.DELETE }, { path: 'me', method: common_1.RequestMethod.GET }, { path: 'posts/:postId/comments', method: common_1.RequestMethod.POST }, { path: 'comments/:commentId', method: common_1.RequestMethod.DELETE });
     }
 };
 exports.AppModule = AppModule;
@@ -34,13 +36,14 @@ exports.AppModule = AppModule = __decorate([
                 username: process.env.DB_USER || 'root',
                 password: process.env.DB_PASS || '1234',
                 database: process.env.DB_NAME || 'myappdb',
-                entities: [user_entity_1.User, post_entity_1.Post],
+                entities: [user_entity_1.User, post_entity_1.Post, comment_entity_1.Comment],
                 synchronize: true,
                 charset: 'utf8mb4',
             }),
             users_module_1.UsersModule,
             auth_module_1.AuthModule,
             posts_module_1.PostsModule,
+            comment_module_1.CommentsModule,
         ],
         controllers: [me_controller_1.MeController],
     })

@@ -7,6 +7,8 @@ import { PostsModule } from './post/posts.module';
 import { jwtMiddleware } from './auth/jwt.middleware';
 import { Post } from './post/post.entity';
 import { MeController } from './me.controller';
+import { Comment } from './post/comments/comment.entity';
+import { CommentsModule } from './post/comments/comment.module';
 
 @Module({
     imports: [
@@ -17,13 +19,14 @@ import { MeController } from './me.controller';
             username: process.env.DB_USER || 'root',
             password: process.env.DB_PASS || '1234',
             database: process.env.DB_NAME || 'myappdb',
-            entities: [User, Post],
+            entities: [User, Post, Comment],
             synchronize: true, // 개발은 true 운영은 migration
             charset: 'utf8mb4',
         }),
         UsersModule,
         AuthModule,
         PostsModule,
+        CommentsModule,
     ],
     controllers: [MeController],
 })
@@ -36,6 +39,8 @@ export class AppModule implements NestModule {
                 { path: 'posts/:id', method: RequestMethod.PATCH },
                 { path: 'posts/:id', method: RequestMethod.DELETE },
                 { path: 'me', method: RequestMethod.GET },
+                { path: 'posts/:postId/comments', method: RequestMethod.POST },
+                { path: 'comments/:commentId', method: RequestMethod.DELETE },
             );
     }
 }

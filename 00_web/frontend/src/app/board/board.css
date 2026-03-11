@@ -3,35 +3,68 @@
   margin: 40px auto;
 }
 
+.board_controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.board_controls label {
+  font-size: 14px;
+  color: #444;
+}
+
+.board_controls select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
 .board_table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  border: 1px solid #ddd;
 }
 
 .board_table th,
 .board_table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 14px 12px;
   text-align: center;
+  font-size: 14px;
 }
 
 .board_table th {
   background: #007bff;
-  color: white;
+  color: #fff;
+  font-weight: 700;
 }
 
-.board_table tr:nth-child(even) {
-  background: #f9f9f9;
+.board_table tr:nth-child(2) {
+  text-align: left;
 }
 
 .write {
-  margin-top: 15px;
-  padding: 8px 15px;
-  background: #3498db;
-  color: white;
+  float: right;
+  min-width: 90px;
+  height: 38px;
+  padding: 0 16px;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  background: #1e78e8;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+}
+
+.write:hover,
+.pagination button:hover:not(:disabled) {
+  background: #1668c7;
 }
 
 .write:hover {
@@ -40,9 +73,45 @@
 
 .post_link {
   text-decoration: none;
-  color: #2c3e50;
+  color: #222;
 }
 
 .post_link:hover {
+  color: #1e78e8;
   text-decoration: underline;
+}
+
+.board_bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pagination button {
+  min-width: 68px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: #1e78e8;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #b8c7dc;
+  cursor: default;
+}
+
+.pagination span {
+  font-size: 14px;
+  color: #333;
 }

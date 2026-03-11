@@ -26,8 +26,8 @@ let PostsController = class PostsController {
     constructor(postsService) {
         this.postsService = postsService;
     }
-    async findAll() {
-        return this.postsService.findAll();
+    async findAll(page = '1', limit = '10') {
+        return this.postsService.findAll(Number(page), Number(limit));
     }
     findOne(id) {
         return this.postsService.findOne(id);
@@ -51,8 +51,10 @@ let PostsController = class PostsController {
 exports.PostsController = PostsController;
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", Promise)
 ], PostsController.prototype, "findAll", null);
 __decorate([

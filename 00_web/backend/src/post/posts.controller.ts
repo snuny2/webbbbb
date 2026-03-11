@@ -7,6 +7,7 @@ import {
     ParseIntPipe,
     Patch,
     Post as HttpPost,
+    Query,
     Req,
 } from '@nestjs/common';
 import express from 'express';
@@ -19,8 +20,8 @@ export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
     @Get()
-    async findAll() {
-        return this.postsService.findAll();
+    async findAll(@Query('page') page = '1', @Query('limit') limit = '10') {
+        return this.postsService.findAll(Number(page), Number(limit));
     }
 
     @Get(':id')

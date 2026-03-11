@@ -12,11 +12,21 @@ export class PostsService {
         private readonly postsRepo: Repository<Post>,
     ) {}
 
-    async findAll() {
-        return this.postsRepo.find({
+    async findAll(page: number, limit: number) {
+        const [posts, total] = await this.postsRepo.findAndCount({
             relations: ['author'],
             order: { id: 'DESC' },
+            skip: (page - 1) * limit,
+            take: limit,
         });
+
+        return {
+            items: posts,
+            total,
+            currentPage: page,
+            totalPages: Math.ceil(total / limit),
+            limit,
+        };
     }
 
     async findOne(id: number) {
