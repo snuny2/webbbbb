@@ -20,8 +20,13 @@ export class PostsController {
     constructor(private readonly postsService: PostsService) {}
 
     @Get()
-    async findAll(@Query('page') page = '1', @Query('limit') limit = '10') {
-        return this.postsService.findAll(Number(page), Number(limit));
+    async findAll(
+        @Query('page') page = '1',
+        @Query('limit') limit = '10',
+        @Query('keyword') keyword = '',
+        @Query('searchType') searchType = 'all',
+    ) {
+        return this.postsService.findAll(Number(page), Number(limit), keyword, searchType);
     }
 
     @Get(':id')

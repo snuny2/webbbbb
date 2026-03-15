@@ -12,13 +12,38 @@ export class PostsService {
         private readonly postsRepo: Repository<Post>,
     ) {}
 
-    async findAll(page: number, limit: number) {
-        const [posts, total] = await this.postsRepo.findAndCount({
-            relations: ['author'],
-            order: { id: 'DESC' },
-            skip: (page - 1) * limit,
-            take: limit,
-        });
+    async findAll(page: number, limit: number, keyword: string, searchType: string) {
+        const query = this.postsRepo
+            .createQueryBuilder('post')
+            .leftJoinAndSelect('post.author', 'author')
+            .orderBy('post.id', 'DESC');
+
+        if (keyword && keyword.trim() !== '') {
+            if (searchType === 'title') {
+                query.andWhere('post.title LIKE :keyword', {
+                    keyword: `%${keyword}%`,
+                });
+            } else if (searchType === 'content') {
+                query.andWhere('post.content LIKE :keyword', {
+                    keyword: `%${keyword}%`,
+                });
+            } else if (searchType === 'author') {
+                query.andWhere('author.name LIKE :keyword', {
+                    keyword: `%${keyword}%`,
+                });
+            } else {
+                query.andWhere(
+                    '(post.title LIKE :keyword OR post.content LIKE :keyword OR author.name LIKE :keyword)',
+                    {
+                        keyword: `%${keyword}%`,
+                    },
+                );
+            }
+        }
+
+        query.skip((page - 1) * limit).take(limit);
+
+        const [posts, total] = await query.getManyAndCount();
 
         return {
             items: posts,
@@ -26,6 +51,8 @@ export class PostsService {
             currentPage: page,
             totalPages: Math.ceil(total / limit),
             limit,
+            keyword,
+            searchType,
         };
     }
 

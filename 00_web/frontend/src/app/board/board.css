@@ -3,26 +3,6 @@
   margin: 40px auto;
 }
 
-.board_controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.board_controls label {
-  font-size: 14px;
-  color: #444;
-}
-
-.board_controls select {
-  height: 36px;
-  padding: 0 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  background: #fff;
-}
-
 .board_table {
   width: 100%;
   border-collapse: collapse;
@@ -48,11 +28,52 @@
   text-align: left;
 }
 
+.search_form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.search_form select {
+  height: 40px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.search_form input {
+  width: 320px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search_form button {
+  min-width: 80px;
+  height: 40px;
+  border: none;
+  border-radius: 6px;
+  background: #1e78e8;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search_form button:hover {
+  background: #1668c7;
+}
+
 .write {
   float: right;
-  min-width: 90px;
-  height: 38px;
-  padding: 0 16px;
+  min-width: 80px;
+  height: 40px;
   border: none;
   border-radius: 6px;
   background: #1e78e8;
@@ -82,21 +103,58 @@
 }
 
 .board_bottom {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  margin-top: 18px;
+  margin-top: 15px;
+}
+
+.board_bottom_left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+}
+
+.board_bottom_left label {
+  font-size: 14px;
+  color: #444;
+}
+
+.board_bottom_left select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+}
+
+.search_result_count {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  white-space: nowrap;
+}
+
+.board_bottom_center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-self: center;
 }
 
 .pagination {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pagination button {
-  min-width: 68px;
+  min-width: 42px;
   height: 36px;
+  padding: 0 10px;
   border: none;
   border-radius: 6px;
   background: #1e78e8;
@@ -111,7 +169,18 @@
   cursor: default;
 }
 
-.pagination span {
-  font-size: 14px;
-  color: #333;
+.pagination .active-page {
+  background: #0f4fa8;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #1668c7;
+}
+
+.search_highlight {
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
