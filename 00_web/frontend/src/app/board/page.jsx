@@ -166,6 +166,9 @@ export default function index() {
                       <td>{post.id}</td>
                       <td>
                         <a href={`/board/${post.id}`} className="post_link">
+                          {post.files?.some((file) => file.isImage) && (
+                            <span className="image_badge">🖼️</span>
+                          )}
                           {highlightText(post.title)}
                         </a>
                       </td>

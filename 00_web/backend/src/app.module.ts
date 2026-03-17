@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
@@ -9,9 +10,16 @@ import { Post } from './post/post.entity';
 import { MeController } from './me.controller';
 import { Comment } from './post/comments/comment.entity';
 import { CommentsModule } from './post/comments/comment.module';
+import { PostFile } from './file/file.entity';
+import { FilesModule } from './file/files.module';
+import { join } from 'path';
 
 @Module({
     imports: [
+        ServeStaticModule.forRoot({
+            rootPath: join(process.cwd(), 'uploads'),
+            serveRoot: '/uploads',
+        }),
         TypeOrmModule.forRoot({
             type: 'mysql',
             host: process.env.DB_HOST || 'localhost',
@@ -19,7 +27,7 @@ import { CommentsModule } from './post/comments/comment.module';
             username: process.env.DB_USER || 'root',
             password: process.env.DB_PASS || '1234',
             database: process.env.DB_NAME || 'myappdb',
-            entities: [User, Post, Comment],
+            entities: [User, Post, Comment, PostFile],
             synchronize: true, // 개발은 true 운영은 migration
             charset: 'utf8mb4',
         }),
@@ -27,6 +35,7 @@ import { CommentsModule } from './post/comments/comment.module';
         AuthModule,
         PostsModule,
         CommentsModule,
+        FilesModule,
     ],
     controllers: [MeController],
 })

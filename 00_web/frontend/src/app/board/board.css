@@ -184,3 +184,9 @@
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+
+.image_badge {
+  color: #e67e22;
+  font-size: 13px;
+  font-weight: 700;
+}

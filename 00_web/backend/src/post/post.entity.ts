@@ -8,6 +8,8 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../users/user.entity';
+import { OneToMany } from 'typeorm';
+import { PostFile } from '../file/file.entity';
 
 @Entity('posts')
 export class Post {
@@ -35,4 +37,7 @@ export class Post {
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
+
+    @OneToMany(() => PostFile, (postFile) => postFile.post)
+    files: PostFile[];
 }

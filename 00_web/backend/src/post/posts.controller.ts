@@ -9,11 +9,16 @@ import {
     Post as HttpPost,
     Query,
     Req,
+    UploadedFiles,
+    UseInterceptors,
 } from '@nestjs/common';
+import { diskStorage } from 'multer';
 import express from 'express';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from '../dto/create_post.dto';
 import { UpdatePostDto } from '../dto/update_post.dto';
+import { createStoredFileName } from '../file/file.util';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @Controller('posts')
 export class PostsController {
@@ -41,10 +46,24 @@ export class PostsController {
     }
 
     @HttpPost()
-    async create(@Body() dto: CreatePostDto, @Req() req: express.Request) {
+    @UseInterceptors(
+        FilesInterceptor('files', 10, {
+            storage: diskStorage({
+                destination: '../uploads',
+                filename: (_req, file, cb) => {
+                    cb(null, createStoredFileName(file.originalname));
+                },
+            }),
+        }),
+    )
+    async create(
+        @Body() dto: CreatePostDto,
+        @UploadedFiles() files: Express.Multer.File[],
+        @Req() req: express.Request,
+    ) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const user = (req as any).user;
-        return this.postsService.create(dto, user);
+        return this.postsService.create(dto, user, files || []);
     }
 
     @Patch(':id')

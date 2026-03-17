@@ -9,6 +9,7 @@ export default function WritePage() {
     title: "",
     content: "",
   });
+  const [files, setFiles] = useState([]);
   const [msg, setMsg] = useState("");
 
   const handleSubmit = async (e) => {
@@ -16,13 +17,18 @@ export default function WritePage() {
     setMsg("등록 중...");
 
     try {
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("content", form.content);
+
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i]);
+      }
+
       const res = await fetch("http://localhost:4000/posts", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         credentials: "include",
-        body: JSON.stringify(form),
+        body: formData,
       });
 
       const data = await res.json().catch(() => ({}));
@@ -60,6 +66,12 @@ export default function WritePage() {
             placeholder="내용을 입력하세요"
             value={form.content}
             onChange={(e) => setForm({ ...form, content: e.target.value })}
+          />
+
+          <input
+            type="file"
+            multiple
+            onChange={(e) => setFiles(Array.from(e.target.files || []))}
           />
 
           <button type="submit">등록하기</button>

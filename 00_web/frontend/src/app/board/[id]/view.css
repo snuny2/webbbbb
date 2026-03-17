@@ -1,5 +1,5 @@
 .post_detail {
-  width: 1200px;
+  width: 1280px;
   margin: 40px auto 60px;
 }
 
@@ -7,12 +7,13 @@
   display: flex;
   gap: 24px;
   align-items: flex-start;
+  flex-wrap: nowrap;
 }
 
 .view_con {
-  flex: 1;
-  min-width: 0;
-  padding: 24px 20px 12px;
+  width: 860px;
+  min-width: 860px;
+  padding: 20px;
   background: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 8px;
@@ -39,17 +40,89 @@
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  white-space: pre-line;
   background: #fafafa;
   color: #222;
   line-height: 1.7;
   box-sizing: border-box;
 }
 
+.post_text {
+  white-space: pre-line;
+  word-break: break-word;
+}
+
+.view_area {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view_image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.view_video {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #000;
+}
+
+.file_download {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.file_download h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.file_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.download_item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file_name {
+  font-size: 14px;
+  color: #333;
+  word-break: break-all;
+}
+
+.download_item a {
+  color: #1e78e8;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.view_buttons {
+  margin-top: 18px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 .back_btn,
 .edit_btn,
 .delete_btn {
-  margin-top: 12px;
   min-width: 74px;
   height: 40px;
   padding: 0 16px;
@@ -63,9 +136,10 @@
 }
 
 .comment_section {
-  width: 360px;
-  padding: 24px 20px 24px;
-  background: #ffffff;
+  width: 340px;
+  min-width: 340px;
+  padding: 20px;
+  background: #fff;
   border: 1px solid #d9d9d9;
   border-radius: 8px;
   box-sizing: border-box;
@@ -91,6 +165,7 @@
   border-radius: 4px;
   resize: none;
   font-size: 14px;
+  box-sizing: border-box;
 }
 
 .comment_form textarea:focus {
@@ -107,10 +182,6 @@
   background: #1e78e8;
   color: white;
   cursor: pointer;
-}
-
-.comment_form button:hover {
-  background: #1668c7;
 }
 
 .comments {
@@ -135,20 +206,13 @@
   font-size: 14px;
 }
 
-.comment_header {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 8px;
-}
-
 .comment_author {
   font-weight: 600;
   color: #333;
   min-width: 70px;
 }
 
-.comment-date {
+.comment_date {
   font-size: 12px;
   color: #888;
   white-space: nowrap;

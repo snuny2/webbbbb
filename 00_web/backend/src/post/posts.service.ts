@@ -4,18 +4,24 @@ import { CreatePostDto } from 'src/dto/create_post.dto';
 import { UpdatePostDto } from 'src/dto/update_post.dto';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
+import { PostFile } from '../file/file.entity';
+import { getFileFlags, normalizeOriginalFileName } from '../file/file.util';
 
 @Injectable()
 export class PostsService {
     constructor(
         @InjectRepository(Post)
         private readonly postsRepo: Repository<Post>,
+
+        @InjectRepository(PostFile)
+        private readonly postFilesRepo: Repository<PostFile>,
     ) {}
 
     async findAll(page: number, limit: number, keyword: string, searchType: string) {
         const query = this.postsRepo
             .createQueryBuilder('post')
             .leftJoinAndSelect('post.author', 'author')
+            .leftJoinAndSelect('post.files', 'files')
             .orderBy('post.id', 'DESC');
 
         if (keyword && keyword.trim() !== '') {
@@ -59,7 +65,7 @@ export class PostsService {
     async findOne(id: number) {
         const post = await this.postsRepo.findOne({
             where: { id },
-            relations: ['author'],
+            relations: ['author', 'files'],
         });
 
         if (!post) {
@@ -75,7 +81,7 @@ export class PostsService {
     async findOneWithoutIncrease(id: number) {
         const post = await this.postsRepo.findOne({
             where: { id },
-            relations: ['author'],
+            relations: ['author', 'files'],
         });
 
         if (!post) {
@@ -85,17 +91,38 @@ export class PostsService {
         return post;
     }
 
-    async create(dto: CreatePostDto, user: any) {
+    async create(dto: CreatePostDto, user: any, files: Express.Multer.File[]) {
         const post = this.postsRepo.create({
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             title: dto.title,
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             content: dto.content,
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             authorId: user.sub,
         });
 
-        return await this.postsRepo.save(post);
+        const savedPost = await this.postsRepo.save(post);
+
+        if (files && files.length > 0) {
+            const fileEntities = files.map((file) => {
+                const flags = getFileFlags(file.mimetype);
+                const originalName = normalizeOriginalFileName(file.originalname);
+
+                return this.postFilesRepo.create({
+                    postId: savedPost.id,
+                    originalName,
+                    storedName: file.filename,
+                    filePath: `uploads/${file.filename}`,
+                    mimeType: file.mimetype,
+                    fileSize: file.size,
+                    isPreviewable: flags.isPreviewable,
+                    isImage: flags.isImage,
+                    isVideo: flags.isVideo,
+                });
+            });
+
+            await this.postFilesRepo.save(fileEntities);
+        }
+
+        return this.findOneWithoutIncrease(savedPost.id);
     }
 
     async update(id: number, dto: UpdatePostDto, user: any) {
