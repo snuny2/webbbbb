@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import { ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
+import { UPLOAD_DIR, UPLOAD_PREFIX } from './file/file_path.util';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,6 +16,7 @@ async function bootstrap() {
         }),
     );
     app.use(cookieParser());
+
     app.enableCors({
         origin: 'http://localhost:3000',
         credentials: true,
@@ -29,8 +30,8 @@ async function bootstrap() {
         }),
     );
 
-    app.useStaticAssets(join(process.cwd(), 'uploads'), {
-        prefix: '/uploads',
+    app.useStaticAssets(UPLOAD_DIR, {
+        prefix: UPLOAD_PREFIX,
     });
 
     await app.listen(4000);

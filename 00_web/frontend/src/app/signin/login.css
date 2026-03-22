@@ -10,11 +10,12 @@ body {
 }
 
 .login_box {
+  width: 100%;
+  max-width: 360px;
   background: #ffffff;
   padding: 40px 50px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 360px;
   text-align: center;
 }
 
@@ -53,4 +54,12 @@ body {
 
 .login_btn:hover {
   background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .login_container,
+  .signup_container {
+    margin: 30px auto;
+    padding: 0 12px;
+  }
 }

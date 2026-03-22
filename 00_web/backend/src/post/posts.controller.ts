@@ -19,6 +19,7 @@ import { CreatePostDto } from '../dto/create_post.dto';
 import { UpdatePostDto } from '../dto/update_post.dto';
 import { createStoredFileName } from '../file/file.util';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { UPLOAD_DIR } from '../file/file_path.util';
 
 @Controller('posts')
 export class PostsController {
@@ -49,7 +50,9 @@ export class PostsController {
     @UseInterceptors(
         FilesInterceptor('files', 10, {
             storage: diskStorage({
-                destination: '../uploads',
+                destination: (_req, _file, cb) => {
+                    cb(null, UPLOAD_DIR);
+                },
                 filename: (_req, file, cb) => {
                     cb(null, createStoredFileName(file.originalname));
                 },
@@ -61,6 +64,9 @@ export class PostsController {
         @UploadedFiles() files: Express.Multer.File[],
         @Req() req: express.Request,
     ) {
+        console.log('dto:', dto);
+        console.log('uploaded files:', files);
+        console.log('content-type:', req.headers['content-type']);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const user = (req as any).user;
         return this.postsService.create(dto, user, files || []);

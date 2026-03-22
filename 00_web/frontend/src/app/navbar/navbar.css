@@ -1,4 +1,5 @@
 .navbar {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,6 +11,7 @@
 .nav {
   font-size: 20px;
   font-weight: bold;
+  flex-wrap: wrap;
 }
 
 .navbar_menu {
@@ -17,6 +19,7 @@
   display: flex;
   float: right;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .navbar_menu li a {
@@ -44,4 +47,15 @@
 
 .logout_btn:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .nav_inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav_menu {
+    width: 100%;
+  }
 }

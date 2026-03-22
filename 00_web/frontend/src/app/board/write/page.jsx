@@ -21,8 +21,14 @@ export default function WritePage() {
       formData.append("title", form.title);
       formData.append("content", form.content);
 
-      for (let i = 0; i < files.length; i++) {
-        formData.append("files", files[i]);
+      files.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      console.log("files state:", files);
+
+      for (const [key, value] of formData.entries()) {
+        console.log("formData:", key, value);
       }
 
       const res = await fetch("http://localhost:4000/posts", {
@@ -71,7 +77,12 @@ export default function WritePage() {
           <input
             type="file"
             multiple
-            onChange={(e) => setFiles(Array.from(e.target.files || []))}
+            accept=".jpg,.jpeg,.png,.gif,.mp4"
+            onChange={(e) => {
+              const selectedFiles = Array.from(e.target.files || []);
+              console.log("선택된 파일들:", selectedFiles);
+              setFiles(selectedFiles);
+            }}
           />
 
           <button type="submit">등록하기</button>

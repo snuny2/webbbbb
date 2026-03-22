@@ -173,7 +173,7 @@ export default function ViewPage() {
                       <div key={file.id}>
                         {file.isImage && file.storedName && (
                           <img
-                            src={`${API}/uploads/${file.storedName}`}
+                            src={`http://localhost:4000/uploads/${file.storedName}`}
                             alt={file.originalName}
                             className="view_image"
                           />
@@ -182,7 +182,7 @@ export default function ViewPage() {
                         {file.isVideo && file.storedName && (
                           <video controls className="view_video">
                             <source
-                              src={`${API}/uploads/${file.storedName}`}
+                              src={`http://localhost:4000/uploads/${file.storedName}`}
                               type={file.mimeType}
                             />
                           </video>
@@ -202,7 +202,7 @@ export default function ViewPage() {
                     <div className="download_item" key={file.id}>
                       <span className="file_name">{file.originalName}</span>
                       <a
-                        href={`${API}/files/${file.id}/download`}
+                        href={`http://localhost:4000/files/${file.id}/download`}
                         target="_blank"
                         rel="noreferrer"
                       >

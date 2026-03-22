@@ -22,7 +22,6 @@ export class FilesController {
         }
 
         const filePath = normalize(join(process.cwd(), file.filePath));
-        console.log('view filePath:', filePath);
 
         if (!existsSync(filePath)) {
             throw new NotFoundException(`실제 파일이 존재하지 않습니다: ${filePath}`);

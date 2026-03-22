@@ -1,5 +1,6 @@
 .edit_con {
-  width: 800px;
+  width: 100%;
+  max-width: 860px;
   margin: 40px auto;
 }
 
@@ -11,6 +12,7 @@
 .edit_form input,
 .edit_form textarea {
   width: 100%;
+  max-width: 860px;
   padding: 12px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
@@ -20,7 +22,7 @@
 
 .edit_form textarea {
   min-height: 300px;
-  resize: vertical;
+  resize: none;
 }
 
 .edit_form button {

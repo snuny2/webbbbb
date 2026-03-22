@@ -149,45 +149,55 @@ export default function index() {
           <p>불러오는 중...</p>
         ) : (
           <>
-            <table className="board_table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>제목</th>
-                  <th>작성자</th>
-                  <th>조회수</th>
-                  <th>작성일</th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts.length > 0 ? (
-                  posts.map((post) => (
-                    <tr key={post.id}>
-                      <td>{post.id}</td>
-                      <td>
-                        <a href={`/board/${post.id}`} className="post_link">
-                          {post.files?.some((file) => file.isImage) && (
-                            <span className="image_badge">🖼️</span>
-                          )}
-                          {highlightText(post.title)}
-                        </a>
-                      </td>
-                      <td>{post.author?.name || "-"}</td>
-                      <td>{post.viewCount}</td>
-                      <td>
-                        {post.createdAt
-                          ? new Date(post.createdAt).toLocaleDateString()
-                          : "-"}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+            <div className="board_wrap">
+              <table className="board_table">
+                <thead>
                   <tr>
-                    <td colSpan={5}>게시글이 없습니다.</td>
+                    <th>ID</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>작성일</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {posts.length > 0 ? (
+                    posts.map((post) => (
+                      <tr key={post.id}>
+                        <td>{post.id}</td>
+                        <td>
+                          <a href={`/board/${post.id}`} className="post_link">
+                            {post.files?.some((file) => file.isImage) && (
+                              <span className="image_badge" title="이미지&gif">
+                                🖼️
+                              </span>
+                            )}
+
+                            {post.files?.some((file) => file.isVideo) && (
+                              <span className="video_badge" title="영상">
+                                🎬
+                              </span>
+                            )}
+                            {highlightText(post.title)}
+                          </a>
+                        </td>
+                        <td>{post.author?.name || "-"}</td>
+                        <td>{post.viewCount}</td>
+                        <td>
+                          {post.createdAt
+                            ? new Date(post.createdAt).toLocaleDateString()
+                            : "-"}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={5}>게시글이 없습니다.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
             <div className="board_bottom">
               <div className="board_bottom_left">
                 <label htmlFor="limit_select">개수</label>

@@ -1,6 +1,9 @@
 .write_con {
-  width: 800px;
+  width: 100%;
+  max-width: 860px;
   margin: 40px auto;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .write_con h1 {
@@ -10,30 +13,35 @@
 .write_form {
   display: flex;
   flex-direction: column;
+  gap: 14px;
 }
 
 .write_form input,
 .write_form textarea {
   width: 100%;
+  max-width: 860px;
   padding: 12px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 15px;
+  box-sizing: border-box;
 }
 
 .write_form textarea {
   min-height: 300px;
-  resize: vertical;
+  resize: none;
 }
 
 .write_form button {
-  width: 120px;
-  padding: 10px;
-  background: #007bff;
-  color: white;
+  align-self: flex-end;
+  min-width: 120px;
+  height: 42px;
   border: none;
   border-radius: 6px;
+  background: #1e78e8;
+  color: #fff;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -45,4 +53,20 @@
   margin-top: 10px;
   color: red;
   white-space: pre-line;
+}
+
+@media (max-width: 768px) {
+  .write_container {
+    margin: 24px auto;
+    padding: 0 12px;
+  }
+
+  .write_form textarea {
+    min-height: 220px;
+  }
+
+  .write_form button {
+    width: 100%;
+    align-self: stretch;
+  }
 }

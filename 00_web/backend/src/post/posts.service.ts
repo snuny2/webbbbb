@@ -106,6 +106,13 @@ export class PostsService {
                 const flags = getFileFlags(file.mimetype);
                 const originalName = normalizeOriginalFileName(file.originalname);
 
+                console.log('saving file:', {
+                    originalName,
+                    mimetype: file.mimetype,
+                    filename: file.filename,
+                    flags,
+                });
+
                 return this.postFilesRepo.create({
                     postId: savedPost.id,
                     originalName,

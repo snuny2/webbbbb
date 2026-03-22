@@ -15,7 +15,8 @@ body {
 }
 
 .signup_form {
-  width: 350px;
+  width: 100%;
+  max-width: 360px;
   background-color: white;
   padding: 40px;
   border-radius: 15px;
@@ -74,4 +75,12 @@ body {
   margin-top: 10px;
   font-size: 14px;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .login_container,
+  .signup_container {
+    margin: 30px auto;
+    padding: 0 12px;
+  }
 }
