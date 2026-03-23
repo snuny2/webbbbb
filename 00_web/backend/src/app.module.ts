@@ -12,6 +12,7 @@ import { Comment } from './post/comments/comment.entity';
 import { CommentsModule } from './post/comments/comment.module';
 import { PostFile } from './file/file.entity';
 import { FilesModule } from './file/files.module';
+import { MypageModule } from './mypage/mypage.module';
 import { join } from 'path';
 
 @Module({
@@ -36,6 +37,7 @@ import { join } from 'path';
         PostsModule,
         CommentsModule,
         FilesModule,
+        MypageModule,
     ],
     controllers: [MeController],
 })
@@ -50,6 +52,10 @@ export class AppModule implements NestModule {
                 { path: 'me', method: RequestMethod.GET },
                 { path: 'posts/:postId/comments', method: RequestMethod.POST },
                 { path: 'comments/:commentId', method: RequestMethod.DELETE },
+                { path: 'mypage', method: RequestMethod.GET },
+                { path: 'users/profile', method: RequestMethod.GET },
+                { path: 'users/profile', method: RequestMethod.PATCH },
+                { path: 'users/withdraw', method: RequestMethod.POST },
             );
     }
 }

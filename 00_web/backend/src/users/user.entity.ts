@@ -7,7 +7,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('user')
+@Entity('users')
 @Unique(['userId'])
 export class User {
     @PrimaryGeneratedColumn()
@@ -19,13 +19,19 @@ export class User {
     @Column({ name: 'user_id', length: 30, comment: '로그인 아이디' })
     userId: string;
 
-    // 비밀번호 헤시로 저장
     @Column({ name: 'password_hash', length: 255, select: false })
     passwordHash: string;
 
-    @CreateDateColumn({ name: 'create_at' })
-    createAt: Date;
+    @Column({ name: 'is_active', default: true })
+    isActive: boolean;
 
-    @UpdateDateColumn({ name: 'update_at' })
-    updateAt: Date;
+    @Column({ name: 'deleted_at', type: 'datetime', nullable: true })
+    deletedAt: Date | null;
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
+    isDeleted: any;
 }

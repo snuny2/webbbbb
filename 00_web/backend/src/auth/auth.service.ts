@@ -11,15 +11,23 @@ export class AuthService {
 
     async login(userId: string, password: string) {
         const user = await this.usersService.findWithPassword(userId);
-        if (!user) throw new UnauthorizedException('아이디 또는 비밀번호가 틀립니다.');
+
+        if (!user || !user.isActive) {
+            throw new UnauthorizedException('아이디 또는 비밀번호가 올바르지 않습니다.');
+        }
 
         const ok = await this.usersService.verifyPassword(password, user.passwordHash);
         if (!ok) throw new UnauthorizedException('아이디 또는 비밀번호가 틀립니다.');
 
         const payload = { sub: user.id, userId: user.userId, name: user.name };
 
-        const accessToken = await this.jwt.signAsync(payload, { expiresIn: 60 * 15 });
-        const refreshToken = await this.jwt.signAsync(payload, { expiresIn: 60 * 60 * 24 * 7 });
+        const accessToken = await this.jwt.signAsync(payload, {
+            expiresIn: '15m',
+        });
+
+        const refreshToken = await this.jwt.signAsync(payload, {
+            expiresIn: '7d',
+        });
 
         return {
             user: { id: user.id, name: user.name, userId: user.userId },

@@ -13,7 +13,7 @@ export default function SignUpPage() {
     e.preventDefault();
     setMsg("회원가입 중");
     try {
-      const res = await fetch("http://localhost:4000/auth/signup", {
+      const res = await fetch("http://localhost:4000/users/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

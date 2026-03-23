@@ -23,7 +23,7 @@ export class Comment {
     @Column({ name: 'post_id' })
     postId: number;
 
-    @ManyToOne(() => User, { eager: true, onDelete: 'CASCADE' })
+    @ManyToOne(() => User, { eager: true })
     @JoinColumn({ name: 'author_id' })
     author: User;
 

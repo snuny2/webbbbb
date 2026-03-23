@@ -22,11 +22,11 @@ export class Post {
     @Column({ type: 'text' })
     content: string;
 
-    @Column({ name: 'user_id' })
+    @Column({ name: 'author_id' })
     authorId: number;
 
     @ManyToOne(() => User)
-    @JoinColumn({ name: 'user_id' })
+    @JoinColumn({ name: 'author_id' })
     author: User;
 
     @Column({ name: 'view_count', default: 0 })
