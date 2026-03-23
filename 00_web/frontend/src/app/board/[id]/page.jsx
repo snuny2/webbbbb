@@ -144,6 +144,145 @@ export default function ViewPage() {
 
   const isAuthor = me?.id === post.authorId;
 
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+  const isImageUrl = (url) => {
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(url);
+  };
+
+  const isVideoUrl = (url) => {
+    return /\.(mp4|webm|ogg)$/i.test(url);
+  };
+
+  const getYoutubeEmbedUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+
+      if (
+        parsed.hostname.includes("youtube.com") &&
+        parsed.searchParams.get("v")
+      ) {
+        const videoId = parsed.searchParams.get("v");
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      if (parsed.hostname.includes("youtu.be")) {
+        const videoId = parsed.pathname.replace("/", "");
+        if (videoId) {
+          return `https://www.youtube.com/embed/${videoId}`;
+        }
+      }
+
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
+  const renderTextWithLineBreaks = (text, keyPrefix = "text") => {
+    const pieces = text.split("\n");
+
+    return pieces.map((piece, index) => (
+      <span key={`${keyPrefix}-${index}`}>
+        {piece}
+        {index !== pieces.length - 1 && <br />}
+      </span>
+    ));
+  };
+
+  const renderContentWithMedia = (content) => {
+    if (!content) return null;
+
+    const parts = content.split(urlRegex);
+
+    return parts.map((part, index) => {
+      if (urlRegex.test(part)) {
+        const youtubeEmbedUrl = getYoutubeEmbedUrl(part);
+
+        if (youtubeEmbedUrl) {
+          return (
+            <div key={index} className="inline_media_block">
+              <a
+                href={part}
+                target="_blank"
+                rel="noreferrer"
+                className="inline_link"
+              >
+                {part}
+              </a>
+
+              <div className="youtube_embed_wrap">
+                <iframe
+                  src={youtubeEmbedUrl}
+                  title="YouTube video player"
+                  className="youtube_embed"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          );
+        }
+
+        if (isImageUrl(part)) {
+          return (
+            <div key={index} className="inline_media_block">
+              <a
+                href={part}
+                target="_blank"
+                rel="noreferrer"
+                className="inline_link"
+              >
+                {part}
+              </a>
+              <img
+                src={part}
+                alt="미디어 이미지"
+                className="inline_content_image"
+              />
+            </div>
+          );
+        }
+
+        if (isVideoUrl(part)) {
+          return (
+            <div key={index} className="inline_media_block">
+              <a
+                href={part}
+                target="_blank"
+                rel="noreferrer"
+                className="inline_link"
+              >
+                {part}
+              </a>
+              <video controls className="inline_content_video">
+                <source src={part} />
+              </video>
+            </div>
+          );
+        }
+
+        return (
+          <a
+            key={index}
+            href={part}
+            target="_blank"
+            rel="noreferrer"
+            className="inline_link"
+          >
+            {part}
+          </a>
+        );
+      }
+
+      return (
+        <span key={index} className="content_text_block">
+          {renderTextWithLineBreaks(part, `part-${index}`)}
+        </span>
+      );
+    });
+  };
+
   return (
     <div>
       <Navbar />
@@ -162,7 +301,9 @@ export default function ViewPage() {
             </div>
 
             <div className="view_content">
-              <div className="post_text">{post.content}</div>
+              <div className="post_text">
+                {renderContentWithMedia(post.content)}
+              </div>
 
               {post.files &&
                 post.files.some(

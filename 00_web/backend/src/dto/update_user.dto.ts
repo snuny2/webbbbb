@@ -1,4 +1,5 @@
 import { IsOptional, IsString, MaxLength, MinLength, Matches } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateProfileDto {
     @IsOptional()
@@ -8,6 +9,8 @@ export class UpdateProfileDto {
     name?: string;
 
     @IsOptional()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    @Transform(({ value }) => (value === '' ? undefined : value))
     @IsString()
     @MinLength(8, { message: '새 비밀번호는 최소 8자 이상이어야 합니다.' })
     @MaxLength(64)

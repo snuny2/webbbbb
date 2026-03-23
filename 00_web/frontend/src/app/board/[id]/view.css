@@ -1,7 +1,7 @@
 .post_detail {
   width: 100%;
   max-width: 1280px;
-  margin: 40px auto 60px;
+  margin: 24px auto 60px;
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -53,6 +53,7 @@
 .post_text {
   white-space: pre-line;
   word-break: break-word;
+  line-height: 1.7;
 }
 
 .view_area {
@@ -276,6 +277,67 @@
 .comment_pagination span {
   font-size: 14px;
   color: #444;
+}
+
+.content_line {
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.content_text_block {
+  white-space: normal;
+}
+
+.inline_link {
+  color: #1e78e8;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.inline_media_block {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inline_content_image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.inline_content_video {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #000;
+}
+
+.youtube_embed_wrap {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  padding-top: 56.25%;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #000;
+}
+
+.youtube_embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* 태블릿 */

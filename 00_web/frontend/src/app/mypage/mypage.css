@@ -305,6 +305,43 @@
   color: #666;
 }
 
+.content_line {
+  margin-bottom: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.inline_link {
+  color: #1e78e8;
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.inline_media_block {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inline_content_image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.inline_content_video {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #000;
+}
+
 /* 태블릿 */
 @media (max-width: 1024px) {
   .mypage_top,

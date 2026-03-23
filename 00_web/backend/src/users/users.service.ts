@@ -3,6 +3,7 @@ import {
     ConflictException,
     NotFoundException,
     UnauthorizedException,
+    BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -89,9 +90,13 @@ export class UsersService {
             user.name = dto.name;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (dto.newPassword) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+            const isSamePassword = await bcrypt.compare(dto.newPassword, user.passwordHash);
+
+            if (isSamePassword) {
+                throw new BadRequestException('현재 비밀번호와 같습니다.');
+            }
+
             user.passwordHash = await bcrypt.hash(dto.newPassword, 12);
         }
 

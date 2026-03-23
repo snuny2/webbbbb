@@ -84,6 +84,15 @@ export default function MyPage() {
     e.preventDefault();
     setEditMsg("수정 중...");
 
+    const requestBody = {
+      name: editForm.name,
+      currentPassword: editForm.currentPassword,
+    };
+
+    if (editForm.newPassword.trim() !== "") {
+      requestBody.newPassword = editForm.newPassword;
+    }
+
     try {
       const res = await fetch(`${API}/users/profile`, {
         method: "PATCH",
@@ -94,28 +103,25 @@ export default function MyPage() {
         body: JSON.stringify(editForm),
       });
 
-      const result = await res.json().catch(() => ({}));
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        throw new Error("서버 응답이 JSON이 아님");
+      }
 
       if (res.ok) {
         setEditMsg("회원정보가 수정되었습니다.");
-        fetch(`${API}/mypage`, {
-          credentials: "include",
-        })
-          .then((res) => res.json())
-          .then((newData) => setData(newData));
-        setEditForm((prev) => ({
-          ...prev,
-          currentPassword: "",
-          newPassword: "",
-        }));
+        location.href = "/";
       } else {
-        const msg = Array.isArray(result.message)
-          ? result.message.join("\n")
-          : result.message || "수정 실패";
+        const msg = Array.isArray(data.message)
+          ? data.message.join("\n")
+          : data.message || "수정 실패";
         setEditMsg(msg);
       }
-    } catch {
-      setEditMsg("서버 연결 실패");
+    } catch (err) {
+      console.error("에러:", err);
+      setEditMsg(err.message || "서버 연결 실패");
     }
   };
 
@@ -144,7 +150,7 @@ export default function MyPage() {
 
       if (res.ok) {
         alert("회원 탈퇴가 완료되었습니다.");
-        location.href = "/login";
+        location.href = "/";
       } else {
         const msg = Array.isArray(result.message)
           ? result.message.join("\n")
@@ -289,7 +295,7 @@ export default function MyPage() {
               <div className="profile_toggle_section withdraw_box">
                 <h3>회원 탈퇴</h3>
                 <p className="withdraw_desc">
-                  탈퇴 시 계정은 비활성화되며, 기존 게시글과 댓글은 유지됩니다.
+                  탈퇴 시 기존 게시글과 댓글은 유지됩니다.
                 </p>
 
                 <form className="withdraw_form" onSubmit={handleWithdraw}>
