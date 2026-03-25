@@ -1,24 +1,42 @@
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import "./navbar.css";
 
+const API = "http://localhost:4000";
+
 export default function Navbar() {
-  const handleLogout = async () => {
-    try {
-      const res = await fetch("http://localhost:4000/auth/logout", {
-        method: "POST",
-        credentials: "include",
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API}/me`, {
+      credentials: "include",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          setUser(null);
+          return;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        if (data?.user) {
+          setUser(data.user);
+        } else {
+          setUser(null);
+        }
+      })
+      .catch(() => {
+        setUser(null);
       });
+  }, []);
 
-      const data = await res.json();
+  const handleLogout = async () => {
+    await fetch(`${API}/auth/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
 
-      if (res.ok) {
-        window.location.href = "/signin";
-      } else {
-        alert(data.message || "로그아웃 실패");
-      }
-    } catch (error) {
-      console.error("로그아웃 에러:", error);
-      alert("서버 연결 실패");
-    }
+    window.location.href = "/login";
   };
 
   return (
@@ -35,9 +53,17 @@ export default function Navbar() {
       </ul>
 
       <div className="navbar_user">
-        <button type="button" className="logout_btn" onClick={handleLogout}>
-          로그아웃
-        </button>
+        {user ? (
+          <>
+            <button onClick={handleLogout} className="logout_btn">
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <Link href="/login" className="login_btn">
+            로그인
+          </Link>
+        )}
       </div>
     </nav>
   );

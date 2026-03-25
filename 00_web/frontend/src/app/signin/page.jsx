@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import "./login.css";
+import "./signin.css";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [form, setForm] = useState({ userId: "", password: "" });
   const [msg, setMsg] = useState("");
   const router = useRouter();
+
+  const goSignup = () => {
+    router.push("./signup");
+  };
 
   const Login = async (e) => {
     e.preventDefault();
@@ -54,10 +58,15 @@ export default function LoginPage() {
           required
           placeholder="비밀번호"
         ></input>
-        <button type="button" className="login_bt" onClick={Login}>
-          로그인
-        </button>
-        <p className="message">{msg}</p>
+        <div className="sign_bt">
+          <button type="button" className="login_bt" onClick={Login}>
+            로그인
+          </button>
+          <button onClick={goSignup} className="signup_bt">
+            회원가입
+          </button>
+          <p className="message">{msg}</p>
+        </div>
       </div>
     </>
   );

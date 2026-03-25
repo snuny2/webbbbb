@@ -40,8 +40,13 @@ body {
   border-color: #007bff;
 }
 
-.login_bt {
-  width: 100%;
+.sign_bt {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.login_bt, .signup_bt {
   padding: 12px;
   border: none;
   border-radius: 6px;
@@ -49,11 +54,7 @@ body {
   color: #fff;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.login_btn:hover {
-  background-color: #0056b3;
+  transition: 0.2s;
 }
 
 @media (max-width: 768px) {
