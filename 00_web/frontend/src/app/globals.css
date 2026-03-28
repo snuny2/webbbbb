@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #07101f;
+  --foreground: #e5eefb;
+  --card-bg: rgba(14, 25, 45, 0.88);
+  --card-border: rgba(148, 163, 184, 0.16);
+  --line: rgba(148, 163, 184, 0.12);
+  --primary: #5aa9ff;
+  --primary-strong: #2f7fe0;
+  --primary-soft: rgba(90, 169, 255, 0.14);
+  --text-main: #e5eefb;
+  --text-sub: #a9bddb;
+  --text-muted: #89a0c4;
+  --danger: #ef6262;
+  --moon-glow: rgba(137, 199, 255, 0.2);
 }
 
 @theme inline {
@@ -12,15 +23,41 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
+  background:
+    linear-gradient(180deg,
+    #020617 0%,
+    #020617 40%,
+    #0f172a 100%);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -300px;
+  right: -300px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(
+    circle,
+    rgba(56,189,248,0.15),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+a {
+  color: #8fd1ff;
+}
+
+a:hover {
+  color: #c7e7ff;
 }

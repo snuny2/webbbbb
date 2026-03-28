@@ -36,7 +36,7 @@ export default function Navbar() {
       credentials: "include",
     });
 
-    window.location.href = "/login";
+    window.location.href = "/signin";
   };
 
   return (
@@ -60,7 +60,7 @@ export default function Navbar() {
             </button>
           </>
         ) : (
-          <Link href="/login" className="login_btn">
+          <Link href="/signin" className="login_btn">
             로그인
           </Link>
         )}

@@ -8,12 +8,21 @@
 
 .write_con h1 {
   margin-bottom: 20px;
+  color: #eef5ff;
+  text-shadow: 0 0 12px rgba(143, 209, 255, 0.14);
 }
 
 .write_form {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  background: rgba(14, 25, 45, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.28),
+    0 0 18px rgba(137, 199, 255, 0.04);
 }
 
 .write_form input,
@@ -22,10 +31,24 @@
   max-width: 860px;
   padding: 12px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 8px;
   font-size: 15px;
   box-sizing: border-box;
+  background: rgba(7, 16, 31, 0.8);
+  color: #e7f0ff;
+}
+
+.write_form input::placeholder,
+.write_form textarea::placeholder {
+  color: #7f97ba;
+}
+
+.write_form input:focus,
+.write_form textarea:focus {
+  outline: none;
+  border-color: #8fd1ff;
+  box-shadow: 0 0 0 4px rgba(143, 209, 255, 0.12);
 }
 
 .write_form textarea {
@@ -37,28 +60,36 @@
   align-self: flex-end;
   min-width: 120px;
   height: 42px;
-  border: none;
-  border-radius: 6px;
-  background: #1e78e8;
-  color: #fff;
+  border: 1px solid rgba(173, 216, 255, 0.12);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #18253d 0%, #243756 100%);
+  color: #eef6ff;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.24);
 }
 
 .write_form button:hover {
-  background: #007bff;
+  background: linear-gradient(135deg, #223453 0%, #30496f 100%);
+  box-shadow:
+    0 0 10px rgba(143, 209, 255, 0.12),
+    0 8px 20px rgba(0, 0, 0, 0.28);
 }
 
 .message {
   margin-top: 10px;
-  color: red;
+  color: #ff9e9e;
   white-space: pre-line;
 }
 
 @media (max-width: 768px) {
-  .write_container {
+  .write_con {
     margin: 24px auto;
     padding: 0 12px;
+  }
+
+  .write_form {
+    padding: 16px;
   }
 
   .write_form textarea {
