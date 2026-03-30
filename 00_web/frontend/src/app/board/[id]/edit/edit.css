@@ -2,8 +2,15 @@
   width: 100%;
   max-width: 860px;
   margin: 40px auto;
+  margin-top: 75px;
   padding: 0 16px;
   box-sizing: border-box;
+}
+
+.edit_con h1 {
+  margin-bottom: 15px;
+  color: #eef5ff;
+  text-shadow: 0 0 12px rgba(143, 209, 255, 0.14);
 }
 
 .edit_form {

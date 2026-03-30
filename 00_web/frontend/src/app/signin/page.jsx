@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import "./signin.css";
+import Navbar from "../navbar/page";
 import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
@@ -39,7 +40,8 @@ export default function LoginPage() {
   };
 
   return (
-    <>
+    <div>
+      <Navbar />
       <div className="login_box">
         <h2 className="login_container">로그인</h2>
         <input
@@ -68,6 +70,6 @@ export default function LoginPage() {
           <p className="message">{msg}</p>
         </div>
       </div>
-    </>
+    </div>
   );
 }

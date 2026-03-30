@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import "./signup.css";
+import Navbar from "../navbar/page";
 import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
@@ -36,33 +37,36 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="signup_box">
-      <form onSubmit={handleSubmit} className="signup_form">
-        <h1>회원가입</h1>
-        <input
-          type="text"
-          placeholder="이름"
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-          required
-        />
-        <input
-          type="text"
-          placeholder="아이디"
-          value={form.userId}
-          onChange={(e) => setForm({ ...form, userId: e.target.value })}
-          required
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-          required
-        />
-        <button type="submit">가입하기</button>
-        <p className="message">{msg}</p>
-      </form>
+    <div>
+      <Navbar />
+      <div className="signup_box">
+        <form onSubmit={handleSubmit} className="signup_form">
+          <h1>회원가입</h1>
+          <input
+            type="text"
+            placeholder="이름"
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+            required
+          />
+          <input
+            type="text"
+            placeholder="아이디"
+            value={form.userId}
+            onChange={(e) => setForm({ ...form, userId: e.target.value })}
+            required
+          />
+          <input
+            type="password"
+            placeholder="비밀번호"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            required
+          />
+          <button type="submit">가입하기</button>
+          <p className="message">{msg}</p>
+        </form>
+      </div>
     </div>
   );
 }
