@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Navbar from "../../../navbar/page";
 import "./edit.css";
 
 export default function EditPage() {
@@ -57,27 +58,30 @@ export default function EditPage() {
   };
 
   return (
-    <div className="edit_con">
-      <h1>게시글 수정</h1>
+    <div>
+      <Navbar />
+      <div className="edit_con">
+        <h1>게시글 수정</h1>
 
-      <form className="edit_form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={form.title}
-          placeholder="제목"
-          onChange={(e) => setForm({ ...form, title: e.target.value })}
-        />
+        <form className="edit_form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={form.title}
+            placeholder="제목"
+            onChange={(e) => setForm({ ...form, title: e.target.value })}
+          />
 
-        <textarea
-          value={form.content}
-          placeholder="내용"
-          onChange={(e) => setForm({ ...form, content: e.target.value })}
-        />
+          <textarea
+            value={form.content}
+            placeholder="내용"
+            onChange={(e) => setForm({ ...form, content: e.target.value })}
+          />
 
-        <button type="submit">수정하기</button>
+          <button type="submit">수정하기</button>
 
-        <p className="message">{msg}</p>
-      </form>
+          <p className="message">{msg}</p>
+        </form>
+      </div>
     </div>
   );
 }

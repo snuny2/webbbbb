@@ -41,7 +41,9 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="nav">네비게이션바에요</div>
+      <div className="nav">
+        <a href="/">네비게이션바에요</a>
+      </div>
 
       <ul className="navbar_menu">
         <li>
