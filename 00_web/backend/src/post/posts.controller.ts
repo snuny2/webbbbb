@@ -64,23 +64,33 @@ export class PostsController {
         @UploadedFiles() files: Express.Multer.File[],
         @Req() req: express.Request,
     ) {
-        console.log('dto:', dto);
-        console.log('uploaded files:', files);
-        console.log('content-type:', req.headers['content-type']);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const user = (req as any).user;
         return this.postsService.create(dto, user, files || []);
     }
 
     @Patch(':id')
+    @UseInterceptors(
+        FilesInterceptor('files', 10, {
+            storage: diskStorage({
+                destination: (_req, _file, cb) => {
+                    cb(null, UPLOAD_DIR);
+                },
+                filename: (_req, file, cb) => {
+                    cb(null, createStoredFileName(file.originalname));
+                },
+            }),
+        }),
+    )
     async update(
         @Param('id', ParseIntPipe) id: number,
-        @Body() dto: UpdatePostDto,
+        @Body() dto: UpdatePostDto & { deleteFileIds?: string | string[] },
+        @UploadedFiles() files: Express.Multer.File[],
         @Req() req: express.Request,
     ) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const user = (req as any).user;
-        return this.postsService.update(id, dto, user);
+        return this.postsService.update(id, dto, user, files || []);
     }
 
     @Delete(':id')

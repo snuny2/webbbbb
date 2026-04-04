@@ -46,8 +46,6 @@ export default function ViewPage() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("post data:", data);
-        console.log("files:", data?.files);
         setPost(data);
       });
 

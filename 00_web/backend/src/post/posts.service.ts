@@ -2,10 +2,12 @@ import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/commo
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostDto } from 'src/dto/create_post.dto';
 import { UpdatePostDto } from 'src/dto/update_post.dto';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { PostFile } from '../file/file.entity';
 import { getFileFlags, normalizeOriginalFileName } from '../file/file.util';
+import { join } from 'path';
+import { existsSync, unlinkSync } from 'fs';
 
 @Injectable()
 export class PostsService {
@@ -132,8 +134,13 @@ export class PostsService {
         return this.findOneWithoutIncrease(savedPost.id);
     }
 
-    async update(id: number, dto: UpdatePostDto, user: any) {
-        const post = await this.postsRepo.findOne({ where: { id } });
+    async update(
+        id: number,
+        dto: UpdatePostDto & { deleteFileIds?: string | string[] },
+        user: any,
+        files: Express.Multer.File[],
+    ) {
+        const post = await this.postsRepo.findOne({ where: { id }, relations: ['files'] });
 
         if (!post) {
             throw new NotFoundException('게시글을 찾을 수 없습니다.');
@@ -149,7 +156,60 @@ export class PostsService {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         post.content = dto.content;
 
-        return await this.postsRepo.save(post);
+        await this.postsRepo.save(post);
+
+        const deleteIdsRaw = dto.deleteFileIds;
+        let deleteIds: number[] = [];
+
+        if (Array.isArray(deleteIdsRaw)) {
+            deleteIds = deleteIdsRaw.map(Number).filter((v) => !Number.isNaN(v));
+        } else if (typeof deleteIdsRaw === 'string' && deleteIdsRaw.trim() !== '') {
+            deleteIds = deleteIdsRaw
+                .split(',')
+                .map((v) => Number(v.trim()))
+                .filter((v) => !Number.isNaN(v));
+        }
+
+        if (deleteIds.length > 0) {
+            const targetFiles = await this.postFilesRepo.find({
+                where: {
+                    id: In(deleteIds),
+                    postId: id,
+                },
+            });
+
+            for (const file of targetFiles) {
+                const realPath = join(process.cwd(), file.filePath);
+                if (existsSync(realPath)) {
+                    unlinkSync(realPath);
+                }
+            }
+
+            await this.postFilesRepo.remove(targetFiles);
+        }
+
+        if (files && files.length > 0) {
+            const fileEntities = files.map((file) => {
+                const flags = getFileFlags(file.mimetype);
+                const originalName = normalizeOriginalFileName(file.originalname);
+
+                return this.postFilesRepo.create({
+                    postId: post.id,
+                    originalName,
+                    storedName: file.filename,
+                    filePath: `uploads/${file.filename}`,
+                    mimeType: file.mimetype,
+                    fileSize: file.size,
+                    isPreviewable: flags.isPreviewable,
+                    isImage: flags.isImage,
+                    isVideo: flags.isVideo,
+                });
+            });
+
+            await this.postFilesRepo.save(fileEntities);
+        }
+
+        return this.findOneWithoutIncrease(id);
     }
 
     async remove(id: number, user: any) {

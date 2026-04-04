@@ -74,6 +74,50 @@
     0 8px 20px rgba(0, 0, 0, 0.28);
 }
 
+.edit_file_section {
+  padding: 16px;
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 8px;
+  background:  rgba(7, 16, 31, 0.8);
+  margin-bottom: 15px;
+}
+
+.edit_file_section h3 {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+
+.edit_file_list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.edit_file_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  word-break: break-all;
+  margin-bottom: 4px;
+}
+
+.edit_file_item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 2px;
+}
+
+.delete_marked {
+  color: #d93025;
+  text-decoration: line-through;
+}
+
+.empty_file_text {
+  margin: 0;
+  color: #777;
+  font-size: 14px;
+}
+
 .message {
   margin-top: 10px;
   color: #ff9e9e;
