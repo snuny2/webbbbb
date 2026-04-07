@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <div>
       <Navbar />
-      <main className="index">
+      <main className="index_con">
         <section className="section">
           <div className="overlay" />
 
