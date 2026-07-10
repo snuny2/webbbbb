@@ -94,6 +94,14 @@
 
 ---
 
+## 학습 기록 (Notion)
+
+상세 풀이 및 정리 내용은 노션 포트폴리오에서 확인할 수 있습니다.
+
+👉 [웹 펜테스팅 포트폴리오 노션](https://www.notion.so/3583db1a3bf181e6870affd1154f7be6)
+
+---
+
 ## 참고 자료
 
 - [PortSwigger Web Security Academy](https://portswigger.net/web-security)
