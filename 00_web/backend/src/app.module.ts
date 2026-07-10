@@ -60,6 +60,8 @@ export class AppModule implements NestModule {
                 { path: 'users/profile', method: RequestMethod.GET },
                 { path: 'users/profile', method: RequestMethod.PATCH },
                 { path: 'users/withdraw', method: RequestMethod.POST },
+                { path: 'files/:id/view', method: RequestMethod.GET },
+                { path: 'files/:id/download', method: RequestMethod.GET },
             );
     }
 }

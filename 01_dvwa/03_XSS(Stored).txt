@@ -1,0 +1,33 @@
+low
+1. 이름, 내용 입력
+
+2. 글자 수 제한으로 내용에 스크립트 입력
+<script>alert(1)</script>
+
+3. xss(stored)탭에 접속 시, 스크립트 실행 확인
+
+
+medium
+1. 이름, 내용 입력
+
+2. 글자 수 제한으로 내용에 스크립트 입력
+<script>alert(1)</script>
+
+3. 이름엔 < 가 남아있는걸 확인, 내용엔 안남음
+
+4. 버프스윗으로 <script>alert(1)</script> 입력
+필터링 되는걸 확인
+
+5. 버프스윗으로 제목에 <script+>alert(1)</script> 추가
+
+>> 클라우드에서 +가 있어서 <script>로 인식하여 된거같음
+>> <scr<scrpit>ipt> 면 중간의 <script>만 지워서 남은 문자들끼지 붙음
+
+
+high
+1. 이름, 내용 입력
+
+2. 이름과 내용에 스크립트 입력 해 확인
+
+3. 이름에 (아마)script가 필터링이 되는 듯 싶어, 이미지 태그 사용
+<img src=as.png onerror=alert(1)>

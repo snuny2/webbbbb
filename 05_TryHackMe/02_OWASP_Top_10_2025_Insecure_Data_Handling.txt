@@ -1,0 +1,191 @@
+Task 1. Introduction 소개
+
+This room will introduce you to 3 elements of the OWASP Top 10 list (2025). In this room, you will learn about the elements relating to application behaviour and user input. We will cover these vulnerabilities briefly, how to prevent them, and finally, you will practice exploiting these vulnerabilities:
+이 방에서는 세 가지 요소를 소개합니다.OWASP2025년 상위 10개 목록. 이 강의실에서는 애플리케이션 동작 및 사용자 입력과 관련된 요소에 대해 학습합니다. 이러한 취약점을 간략하게 살펴보고, 예방 방법을 알아본 후, 마지막으로 이러한 취약점을 악용하는 실습을 진행합니다.
+
+A04: Cryptographic Failures
+A05: Injection
+A08: Software or Data Integrity Failures
+A04: 암호화 오류
+A05: 주입
+A08: 소프트웨어 또는 데이터진실성실패
+
+Deploy Practical
+Before we begin, please deploy the practical VM by clicking the green "Start Lab Machine" button below. Please note that you will need to use either the TryHackMe AttackBox or your own hacking machine connected to the TryHackMe VPN to access each practical.
+실용적인 배포
+시작하기 전에 실습 자료를 배포해 주십시오.VM아래의 초록색 "Start Lab Machine" 버튼을 클릭하세요. TryHackMe AttackBox 또는 TryHackMe에 연결된 자체 해킹 머신이 필요합니다.VPN각 실습에 접근하기 위해.
+If you're ready, let's begin the showcase.
+준비되셨다면, 쇼케이스를 시작하겠습니다.
+
+Answer the questions below
+아래 질문에 답하세요
+
+I'm ready!
+준비됐어요!
+
+> check 누르기
+
+
+
+Task 2. A04: Cryptographic Failures A04: 암호화 오류
+
+Cryptographic failiures makes yet another appearence on this OWASP Top 10 list. Let's explore what this exactly and some mitigation steps below.
+이번에도 암호화 오류가 또다시 등장했습니다.OWASP상위 10개 목록입니다. 이것이 정확히 무엇인지, 그리고 아래에서 몇 가지 완화 조치를 살펴보겠습니다.
+
+What are Cryptographic Failures?
+Cryptographic failures happen when sensitive data isn't adequately protected due to lack of encryption, faulty implementation, or insufficient security measures. This includes storing passwords without hashing, using outdated or weak algorithms (such as MD5, SHA1, or DES), exposing encryption keys, or failing to secure data during transmission.
+암호화 오류란 무엇인가요?
+암호화 오류는 암호화 부족, 잘못된 구현 또는 불충분한 보안 조치로 인해 민감한 데이터가 적절하게 보호되지 않을 때 발생합니다. 여기에는 해싱 없이 비밀번호를 저장하거나, 오래되었거나 취약한 알고리즘(예: ...)을 사용하는 것이 포함됩니다.MD5, SHA1 또는데스암호화 키를 노출하거나 전송 중 데이터를 보호하지 못하는 경우 등이 있습니다.
+
+An incredible example of this is an application or service "rolling their own cryptography", rather than using well-established, vetted, and verifiably secure encryption algorithms.
+이러한 현상의 놀라운 예로는 검증되고 안전성이 입증된 암호화 알고리즘을 사용하는 대신, 애플리케이션이나 서비스가 "자체 암호화 방식"을 사용하는 경우를 들 수 있습니다.
+
+How to Prevent Cryptographic Failures
+Preventing cryptographic failures starts with choosing strong, modern algorithms and implementing them properly. Sensitive information such as passwords should be hashed using robust, slow hashing functions like bcrypt, scrypt, or Argon2. When encrypting data, avoid creating your own algorithms; instead, rely on trusted, industry-standard libraries.
+암호화 오류를 방지하는 방법
+암호화 오류를 방지하려면 강력하고 최신 알고리즘을 선택하고 이를 올바르게 구현하는 것이 중요합니다. 비밀번호와 같은 민감한 정보는 bcrypt, scrypt 또는 Argon2와 같이 강력하지만 속도가 느린 해싱 함수를 사용하여 해싱해야 합니다. 데이터를 암호화할 때는 자체 알고리즘을 만들지 말고 신뢰할 수 있는 업계 표준 라이브러리를 사용하는 것이 좋습니다.
+
+Never embed access credentials (i.e., to a third-party service) in source code, configuration files, or repositories. Instead, use secure key management systems or environments specifically designed for storing secrets.
+타사 서비스 접속 자격 증명과 같은 정보를 소스 코드, 설정 파일 또는 저장소에 절대 포함시키지 마십시오. 대신, 보안 키 관리 시스템이나 비밀 정보 저장을 위해 특별히 설계된 환경을 사용하십시오.
+
+Practical
+The practical for this task is located at http://MACHINE_IP:8001(opens in new tab). This web app demonstrates a "note sharing" service that uses a weak, shared derivative key to protect the notes.
+현실적인
+이 과제의 실습 장소는 다음과 같습니다.http://MACHINE_IP:8001(새 탭에서 열립니다)이 웹 앱은 취약한 공유 파생 키를 사용하여 메모를 보호하는 "메모 공유" 서비스를 보여줍니다.
+
+Follow the steps on the web application to unlock all notes and retrieve a flag.
+웹 애플리케이션의 안내에 따라 모든 메모를 잠금 해제하고 플래그를 획득하세요.
+
+Recommended TryHackMe Content
+If you'd like to explore this type of attack in much further depth, we highly recommend the following TryHackMe content:
+TryHackMe 추천 콘텐츠
+이러한 유형의 공격에 대해 더 자세히 알아보고 싶으시다면, 다음 TryHackMe 콘텐츠를 적극 추천합니다.
+
+Cryptographic Failures Module
+암호화 오류 모듈
+
+Answer the questions below
+아래 질문에 답하세요
+
+Decrypt the encrypted notes. One of them will contain a flag value. What is it?
+암호화된 메모를 해독하세요. 메모 중 하나에 플래그 값이 포함되어 있을 겁니다. 그 값은 무엇일까요?
+
+> CyberChef사이트에서 form base64와 XOR을 꺼내고 key 부분을 알려준 KEY_ 0~9 대입
+
+
+
+Task 3. A05: Injection A05: 주입
+
+Injection has been a long-standing feature on the OWASP Top 10 list, and it is no surprise. Injection remains a classic example of web exploitation.
+주입은 오랫동안 특징적인 요소였습니다.OWASP상위 10위 목록이며, 놀랄 것도 없습니다. 인젝션 공격은 웹 공격의 고전적인 예입니다.
+
+What is Injection?
+Injection occurs when an application takes user input and mishandles it. Instead of processing the input securely, the application passes it directly into a system that can execute commands or queries, such as a database, a shell, a templating engine or API.
+주사란 무엇인가요?
+인젝션 공격은 애플리케이션이 사용자 입력을 받아 잘못 처리할 때 발생합니다. 애플리케이션이 입력을 안전하게 처리하는 대신, 데이터베이스, 셸, 템플릿 엔진 등 명령이나 쿼리를 실행할 수 있는 시스템에 직접 입력을 전달하는 것입니다.API.
+
+You are likely familiar with SQL Injection, where an attacker inserts an SQL query into an application's logic, such as a login form, which then gets processed by the database. This happens when the web application fails to sanitise user input and instead uses it to construct the query. For instance, taking the "username" input on a login form and directly using it to query the database.
+여러분은 아마도 다음을 잘 알고 계실 것입니다.SQL인젝션은 공격자가 악성코드를 삽입하는 공격 방식입니다.SQL로그인 폼과 같은 애플리케이션 로직에 사용자 입력값을 직접 사용하여 데이터베이스를 쿼리하는 경우를 말합니다. 이는 웹 애플리케이션이 사용자 입력값을 제대로 검증하지 않고 그대로 쿼리를 구성하는 데 사용할 때 발생합니다. 예를 들어, 로그인 폼에서 "사용자 이름"을 입력받아 이를 데이터베이스에 직접 쿼리하는 경우가 이에 해당합니다.
+
+The following are some classic examples of injection that you may be familiar with:
+다음은 여러분이 잘 알고 있을 만한 전형적인 인젝션 공격 사례입니다.
+
+SQL Injection
+Command Injection
+AI Prompts
+Server Side Template Injection (SSTI)
+SQL주입
+명령 주입
+일체 포함프롬프트
+서버 측 템플릿 주입(SSTI)
+
+Unfortunately, even in 2025, these types of attacks remain relevant, as evidenced by the inclusion of injection on the OWASP top ten list, not just once in 2021, but twice by 2025. Injection is of high severity and should be treated accordingly.
+안타깝게도 2025년에도 이러한 유형의 공격은 여전히 ​​유효하며, 주입 공격이 포함된 것이 이를 증명합니다.OWASP2021년에 한 번뿐 아니라 2025년까지 두 번이나 10대 위험 목록에 오를 것입니다. 주사는 매우 심각한 질병이므로 그에 맞는 치료가 필요합니다.
+
+How to Prevent Injection
+Preventing injection starts by ensuring that user input is always treated as untrusted. Rather than parsing directly, instead, take elements of the input for querying. For SQL queries, this means using prepared statements and parameterised queries instead of building queries through string concatenation. For OS commands, avoid functions that pass input directly to the system shell, and instead rely on safe APIs and processes that don’t invoke the shell at all.
+주사 예방 방법
+인젝션 공격을 방지하려면 사용자 입력을 항상 신뢰할 수 없는 것으로 처리하는 것이 중요합니다. 직접 파싱하는 대신 입력의 요소를 가져와 쿼리하는 방식을 사용하십시오.SQL이는 문자열 연결을 통해 쿼리를 구성하는 대신 준비된 문과 매개변수화된 쿼리를 사용하는 것을 의미합니다.OS명령어를 사용할 때는 입력값을 시스템 셸에 직접 전달하는 함수를 피하고, 셸을 전혀 호출하지 않는 안전한 API와 프로세스를 사용하십시오.
+
+Input validation and sanitisation play a crucial role in preventing these types of attack. Escape dangerous characters, enforce strict data types and filter before the application even processes the input.
+입력 유효성 검사 및 정제는 이러한 유형의 공격을 방지하는 데 매우 중요한 역할을 합니다. 위험한 문자를 이스케이프 처리하고, 엄격한 데이터 유형을 적용하며, 애플리케이션이 입력을 처리하기 전에 필터링해야 합니다.
+
+Practical
+Today's practical will showcase command injection. This example illustrates Server Side Template Injection (SSTI). You will abuse an application's ability to render dynamic content to retrieve a flag stored on the machine hosting the application.
+현실적인
+오늘 실습에서는 다음과 같은 내용을 보여드리겠습니다.명령 주입이 예제는 서버 측 템플릿 주입(SSTI) 공격을 보여줍니다. 애플리케이션이 동적 콘텐츠를 렌더링하는 기능을 악용하여 애플리케이션이 호스팅되는 시스템에 저장된 플래그를 탈취할 수 있습니다.
+
+실습의 이 부분은 다음에서 확인할 수 있습니다.http://MACHINE_IP:8000(새 탭에서 열립니다).
+You can access this portion of the practical on http://MACHINE_IP:8000(opens in new tab).
+
+Recommended TryHackMe Content
+If you'd like to explore this type of attack in much further depth, we highly recommend the following TryHackMe content:
+TryHackMe 추천 콘텐츠
+이러한 유형의 공격에 대해 더 자세히 알아보고 싶으시다면, 다음 TryHackMe 콘텐츠를 적극 추천합니다.
+
+Injection Attacks Module
+Command Injection
+주입 공격 모듈
+명령 주입
+
+Answer the questions below
+아래 질문에 답하세요
+
+Perform an SSTI attack on the practical. You need to read the contents of flag.txt that is located within the same directory as the web application.
+실제 웹 애플리케이션에 SSTI 공격을 수행하십시오. 웹 애플리케이션과 동일한 디렉터리에 있는 flag.txt 파일의 내용을 읽어야 합니다.
+
+> {{ 7 * 7 }} 이란 페이로드를 보내고 응답 기다리기.
+49가 나오면 취약점이 있다는 것이므로
+{{ self.__init__.__globals__.__builtins__.__import__('os').popen('cat flag.txt').read() }}
+입력 후 기다리기
+
+
+
+Task 4. A08: Software or Data Integrity Failures A08: 소프트웨어 또는 데이터 무결성 오류
+
+Again, Software or Data Integrity failures have been a long-standing feature on the OWASP Top 10 list, featuring twice over the last two releases. Let's explore this a bit further below.
+다시 말해, 소프트웨어냐 데이터냐진실성실패는 오랫동안 지속되어 온 특징입니다.OWASP이번 탑 10 리스트에는 지난 두 번의 발매작에 두 번씩이나 포함된 곡들이 있습니다. 아래에서 좀 더 자세히 살펴보겠습니다.
+
+What Are Software or Data Integrity Failures?
+소프트웨어 또는 데이터란 무엇인가?진실성실패?
+
+Software or Data Integrity Failures occur when an application relies on code, updates, or data it assumes are safe, without verifying their authenticity, integrity, or origin. This includes trusting software updates without verification, loading scripts or configuration files from untrusted sources, failing to validate data that impacts application logic, or accepting data such as binaries, templates, or JSON files without confirming whether it has been altered.
+소프트웨어 또는 데이터진실성애플리케이션이 코드, 업데이트 또는 데이터의 진위 여부를 검증하지 않고 안전하다고 가정하고 이에 의존할 때 오류가 발생합니다.진실성출처 또는 신뢰성을 배제하는 행위입니다. 여기에는 검증 없이 소프트웨어 업데이트를 신뢰하거나, 신뢰할 수 없는 출처에서 스크립트 또는 구성 파일을 로드하거나, 애플리케이션 로직에 영향을 미치는 데이터의 유효성을 검사하지 않거나, 바이너리, 템플릿 등의 데이터를 수락하는 행위가 포함됩니다.JSON파일이 변경되었는지 여부를 확인하지 않고 파일을 업로드합니다.
+
+How to Avoid Software & Data Integrity Failures
+Preventing these failures begins with establishing trust boundaries. Applications should never assume that code, updates, or key pieces of data are legitimate and automatically trusted; their integrity must be verified. This involves using methods such as cryptographic checks (like checksums) for update packages and ensuring that only trusted sources can modify critical artefacts.
+
+소프트웨어 및 데이터 관련 문제를 피하는 방법진실성실패
+이러한 오류를 방지하려면 신뢰 경계를 설정하는 것이 중요합니다. 애플리케이션은 코드, 업데이트 또는 핵심 데이터가 합법적이고 자동으로 신뢰할 수 있다고 가정해서는 안 됩니다.진실성반드시 검증해야 합니다. 이를 위해서는 업데이트 패키지에 대한 암호화 검사(체크섬 등)와 같은 방법을 사용하고 신뢰할 수 있는 소스만 중요 아티팩트를 수정할 수 있도록 보장해야 합니다.
+
+Additionally, for applications, integrity and trust boundaries should also be within build processes such as CI/CD.
+또한, 지원서의 경우,진실성또한 신뢰 경계는 다음과 같은 구축 프로세스 내에 포함되어야 합니다.CI/CD.
+
+Practical
+This practical will demonstrate a deserialization attack in Python. You can access this practical on http://MACHINE_IP:8002.
+현실적인
+이 실습에서는 파이썬에서 역직렬화 공격을 시연합니다. 이 실습은 다음 링크에서 확인할 수 있습니다.http://MACHINE_IP:8002
+
+Follow the steps in the practical to generate and provide some malicious input to the web application.
+실습 단계에 따라 웹 애플리케이션에 악성 입력값을 생성하고 제공하십시오.
+
+Recommended TryHackMe Content
+TryHackMe 추천 콘텐츠
+
+If you'd like to explore this type of attack in much further depth, we highly recommend the following TryHackMe content:
+이러한 유형의 공격에 대해 더 자세히 알아보고 싶으시다면, 다음 TryHackMe 콘텐츠를 적극 추천합니다.
+
+Insecure Deserialisation
+Supply Chain Attack: Lottie
+안전하지 않은 역직렬화
+공급망 공격: 로티
+
+Answer the questions below
+아래 질문에 답하세요
+
+Use Python to pickle a malicious, serialised payload that reads the contents of flag.txt and submits it to the application.
+ What are the contents of flag.txt?
+Python을 사용하여 flag.txt 파일의 내용을 읽어 애플리케이션에 전송하는 악성 직렬화 페이로드를 피클링합니다.
+ flag.txt 파일의 내용은 무엇인가요?
+
+> 플래그 확인 할 코드를 base64 값으로 만들어 넣기

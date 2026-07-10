@@ -1,0 +1,176 @@
+Task 1. Introduction 소개
+
+This room breaks down 3 of the OWASP Top 10 2025 categories. In this room, you will learn about the categories that are related to failures in how Identity, Authentication, Authorisation, and Accountability (IAAA) is implemented in the application. You will put the theory into practice by completing supporting challenges. The following categories are covered in this room:
+이 방에서는 다음 중 3가지를 분석합니다.OWASP2025년 주요 10대 이슈. 이 강의실에서는 신원 확인, 인증, 권한 부여 및 책임 관리(Identity, Authentication, Authorisation, and Accountability) 과정에서 발생할 수 있는 문제점과 관련된 이슈들을 다룹니다.IAAA이 내용은 애플리케이션에 구현되어 있습니다. 여러분은 보조 과제를 완료하면서 이론을 실제로 적용해 보게 됩니다. 이 강의실에서는 다음 범주를 다룹니다.
+
+1. A01: Broken Access Control
+2. A07: Authentication Failures
+3. A09: Logging & Alerting Failures
+The room has been designed for beginners and assumes no previous security knowledge.
+A01: 접근 제어 오류
+A07: 인증 실패
+A09: 로깅 및 알림 오류
+이 방은 초보자를 위해 설계되었으며 보안 관련 사전 지식이 없어도 이용할 수 있습니다.
+
+Answer the questions below
+I am ready to learn about IAAA failures!
+아래 질문에 답하세요
+저는 IAAA의 실패 사례에 대해 배우고 싶습니다!
+
+> check 누르기
+
+
+
+Task 2. What is IAAA? IAAA란 무엇인가요?
+
+IAAA is a simple way to think about how users and their actions are verified on applications. Each item plays a crucial role and it isn't possible to skip a level. That means, if a previous item isn't being performed, you cannot perform the later times. The four items are:
+IAAA이는 애플리케이션에서 사용자와 그들의 행동이 어떻게 검증되는지를 간단하게 이해하는 방법입니다. 각 항목은 매우 중요한 역할을 하며, 단계를 건너뛸 수 없습니다. 즉, 이전 단계의 검증이 완료되지 않으면 이후 단계의 검증도 완료할 수 없습니다. 네 가지 항목은 다음과 같습니다.
+
+Identity - the unique account (e.g., user ID/email) that represents a person or service.
+Authentication - proving that identity (passwords, OTP, passkeys).
+Authorisation - what that identity is allowed to do.
+Accountability - recording and alerting on who did what, when, and from where.
+The three categories of OWASP Top 10:2025 discussed in this room relates to failures in how IAAA was implemented. Weaknesses here can be incredibly detrimental, as it can allow threat actors to either access the data of other users or gain more privileges than they are suppose to have.
+신원 - 개인 또는 서비스를 나타내는 고유한 계정(예: 사용자 ID/이메일).
+인증 - 신원 증명(비밀번호, OTP, 패스키).
+권한 부여 - 해당 신원이 허용된 작업.
+책임 소재 파악 - 누가 무엇을 언제 어디서 했는지 기록하고 알림 기능을 제공합니다.
+세 가지 범주OWASP이 방에서 논의된 Top 10:2025는 실패 방식과 관련이 있습니다.IAAA해당 기능이 구현되었습니다. 이 부분의 취약점은 매우 치명적일 수 있는데, 공격자가 다른 사용자의 데이터에 접근하거나 허용된 권한보다 더 많은 권한을 획득할 수 있도록 허용할 수 있기 때문입니다.
+
+If you want a deeper dive on IAAA first, work through this room.
+더 자세히 알고 싶으시다면IAAA먼저, 이 방부터 차근차근 진행하세요.
+
+Answer the questions below
+What does IAAA stand for?
+
+아래 질문에 답하세요
+IAAA는 무슨 약자인가요?
+
+> Identity, Authentication, Authorisation, Accountability
+
+
+
+Task 3. A01: Broken Access Control A01: 접근 제어 오류
+
+Broken Access Control happens when the server doesn’t properly enforce who can access what on every request. A common occurence of this is IDOR (Insecure Direct Object Reference): if changing an ID (like ?id=7 → ?id=6) lets you see or edit someone else’s data, access control is broken.
+접근 제어 오류는 서버가 각 요청에 대해 누가 무엇에 접근할 수 있는지 제대로 관리하지 못할 때 발생합니다 . 이러한 오류는 다음과 같은 경우에 흔히 발생합니다. 이도르(안전하지 않은 직접 객체 참조): ID(예: ?id=7 → ?id=6)를 변경하여 다른 사람의 데이터를 보거나 편집할 수 있다면 접근 제어가 무너진 것입니다.
+
+In practice this shows up as horizontal privilege escalation (same role, other user’s stuff) or vertical privilege escalation (jumping to admin-only actions) because the application trusts the client too much.
+실제로 이는 애플리케이션이 클라이언트를 지나치게 신뢰하기 때문에 수평적 권한 상승(동일한 역할이지만 다른 사용자의 권한 사용) 또는 수직적 권한 상승(관리자 전용 작업으로 이동)으로 나타납니다.
+
+Start the static site attached to this task and play with the accountID value in the URL. So if you can identify which user has more than $ 1 million in their account!
+이 작업에 첨부된 정적 사이트를 실행하고 accountIDURL 값을 바꿔가며 테스트해 보세요. 계정에 100만 달러 이상을 보유한 사용자를 찾아낼 수 있다면 정말 놀라운 결과가 나올 겁니다!
+
+If you want a deeper dive or more variations on the theme (encoded IDs, hashed IDs, etc.), work through these rooms afterwards:
+더 자세한 내용이나 주제에 대한 다양한 변형을 원하시면 (인코딩됨)ID해시됨ID(등) 그런 다음 이 방들을 차례로 살펴보세요.
+
+Broken Access Control
+Insecure Direct Object References
+접근 제어 오류
+불안정한 직접 객체 참조
+
+Answer the questions below
+아래 질문에 답하세요
+
+If you don't get access to more roles but can view the data of another users, what type of privilege escalation is this?
+만약 더 많은 역할을 얻지는 못했지만 다른 사용자의 데이터를 볼 수 있다면, 이는 어떤 유형의 권한 상승인가요?
+
+> Horizontal
+
+What is the note you found when viewing the user's account who had more than $ 1 million?
+100만 달러 이상을 보유한 사용자의 계정을 확인했을 때 어떤 메모를 발견하셨나요?
+
+> 1~10번이라 직접 바꾸면서 함
+
+
+
+Task 4. A07: Authentication Failures A07: 인증 실패
+
+Authentication Failures happen when an application can’t reliably verify or bind a user’s identity. Common issues include:
+인증 실패는 애플리케이션이 사용자의 신원을 확실하게 확인하거나 연결할 수 없을 때 발생합니다. 일반적인 문제는 다음과 같습니다.
+
+username enumeration
+weak/guessable passwords (no lockout/rate limits)
+logic flaws in the login/registration flow
+insecure session or cookie handling
+If any of these are present, an attacker can often log in as someone else or bind a session to the wrong account.
+사용자 이름 열거
+취약하거나 추측하기 쉬운 비밀번호(잠금/접속 횟수 제한 없음)
+로그인/회원가입 과정의 논리적 오류
+안전하지 않은 세션 또는 쿠키 처리
+이러한 요소 중 하나라도 존재하면 공격자는 다른 사람으로 로그인하거나 세션을 잘못된 계정에 연결할 수 있습니다.
+
+Let's try to break into the admin user's account. We know that their username is admin, so let's try to fool the application by registering a user with the name of aDmiN. Start the static site attached to this task. register your account and log into the admin user's account to get your next flag!
+사용자 계정 에 침입해 보겠습니다 admin. 사용자 이름이 인 것을 알고 있으니 admin, 라는 이름으로 사용자를 등록하여 애플리케이션을 속여 보겠습니다 aDmiN. 이 작업에 연결된 정적 사이트를 시작하세요. 계정을 등록하고 관리자 계정으로 로그인하여 다음 플래그를 획득하세요!
+
+If you want more depth or broader techniques (e.g., brute force, session handling, cookies/JWT/OAuth, and MFA specifics), work through these after this room:
+Authentication Bypass Room
+Multi-Factor Authentication
+Authentication Module
+더 심층적인 내용이나 더 광범위한 기술(예: 무차별 대입 공격, 세션 처리, 쿠키/JWT/OAuth 등)을 원하시면 다음을 참조하세요.MFA구체적인 사항은 이 방을 마친 후 다음 사항들을 처리하세요.
+인증 우회실
+다중 요소 인증
+인증 모듈
+
+Answer the questions below
+아래 질문에 답하세요
+
+What is the flag on the admin user's dashboard?
+admin사용자 대시보드 에 표시되는 플래그는 무엇입니까 ?
+
+> id를 aDmiN으로 회원가입 하여 우회
+
+
+
+Task 5. A09: Logging & Alerting Failures A09: 로깅 및 알림 오류
+
+When applications don’t record or alert on security-relevant events, defenders can’t detect or investigate attacks. Good logging underpins accountability (being able to prove who did what, when, and from where). In practice, failures look like missing authentication events, vague error logs, no alerting on brute-force or privilege changes, short retention, or logs stored where attackers can tamper with them.
+애플리케이션이 보안 관련 이벤트를 기록하거나 경고하지 않으면 방어자는 공격을 탐지하거나 조사할 수 없습니다. 제대로 된 로깅은 책임 소재 를 명확히 하는 데 필수적 입니다(누가 언제 어디서 무엇을 했는지 증명할 수 있어야 함). 실제로는 인증 이벤트 누락, 모호한 오류 로그, 무차별 대입 공격이나 권한 변경에 대한 경고 부재, 짧은 보존 기간, 공격자가 변조할 수 있는 위치에 로그 저장 등의 문제가 발생할 수 있습니다.
+
+Let's take a look at what is required to perform an investigation of a application under attack. Start the static site attached to this task, perform your investigation, and answer the questions below. Then, think about how hard it would be to understand what happened during this attack if key pieces of this log information as missing. 
+공격받는 애플리케이션을 조사하는 데 필요한 사항을 살펴보겠습니다. 이 과제에 첨부된 정적 사이트를 실행하고 조사를 수행한 후 아래 질문에 답하십시오. 그런 다음, 핵심 로그 정보가 누락된 경우 공격 상황을 파악하는 것이 얼마나 어려울지 생각해 보십시오. 
+
+If you want a deeper dive into logging for accountability, take a look at this room.
+책임성을 확보하기 위한 로깅에 대해 더 자세히 알아보고 싶다면 이 방을 살펴보세요 .
+
+Answer the questions below
+아래 질문에 답하세요
+
+It looks like an attacker tried to perform a brute-force attack, what is the IP of the attacker?
+공격자가 무차별 대입 공격을 시도한 것으로 보입니다. 공격자의 IP 주소는 무엇입니까?
+
+> 로그 확인하기
+
+Looks like they were able to gain access to an account! What is the username associated with that account?
+계정에 접근하는 데 성공한 것 같네요! 해당 계정의 사용자 이름은 무엇인가요?
+
+> admin
+
+What action did the attacker try to do with the account? List the endpoint the accessed.
+공격자는 해당 계정으로 어떤 작업을 시도했습니까? 접근한 엔드포인트를 나열하십시오.
+
+> /supersecretadminstuff
+
+
+
+Task 6. Conclusion 결론
+
+You’ve just worked through the essentials of Identity, Authentication, Authorisation, and Accountability in web applications and how it can cause several of the categories of vulnerabilities discussed in OWASP Top 10:2025. The big ideas to keep:
+웹 애플리케이션에서 신원 확인, 인증, 권한 부여 및 책임 관리 의 필수 요소 와 이러한 요소들이 앞서 논의된 여러 유형의 취약점을 어떻게 유발할 수 있는지에 대해 살펴보았습니다.OWASP2025년 톱 10. 기억해야 할 핵심 아이디어:
+
+A01 Broken Access Control: Enforce server-side checks on every request
+A07 Authentication Failures: Enforce unique indexes on the canonical form, rate-limit/lock out brute force, and rotate sessions on password/privilege changes.
+A09 Logging & Alerting Failures: Log the full auth lifecycle (fail/success, password/2FA/role changes, admin actions), centralise logs off-host with retention, and alert on anomalies (e.g., brute-force bursts, privilege elevation).
+Continue the journey with Room 2 in this module: Application Design Flaws.
+A01 접근 제어 오류: 모든 요청 에 ​​대해 서버 측 검사를 시행하십시오.
+A07 인증 실패: 정규 형식에 고유 인덱스를 적용하고, 무차별 대입 공격을 제한/차단하고, 암호/권한 변경 시 세션을 순환합니다.
+A09 로깅 및 경고 실패: 전체 인증 라이프사이클(실패/성공, 암호/2FA/역할 변경, 관리자 작업)을 로깅하고, 로그를 호스트 외부의 중앙 집중식 저장소에 보존하며, 이상 징후(예: 무차별 대입 공격, 권한 상승) 발생 시 경고를 보냅니다.
+이번 모듈의 2번째 강의실 인 '애플리케이션 설계 결함 ' 에서 여정을 계속하세요  .
+
+Answer the questions below
+아래 질문에 답하세요
+
+I understand the importance of a secure IAAA implementation in my application!
+저는 제 애플리케이션에서 안전한 IAAA 구현이 얼마나 중요한지 잘 알고 있습니다!
+
+> check 누르기

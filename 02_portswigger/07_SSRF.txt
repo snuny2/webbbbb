@@ -1,0 +1,13 @@
+1) Lab: Basic SSRF against the local server
+> 기본 ssrf
+
+1. 페이지 확인
+
+2. 상품 페이지에 물량 확인 가능
+> 요청에 링크가 있음
+
+3. 리피터에서 링크를 변경
+http://localhost/admin
+
+4. 목표 계정 제거
+http://localhost/admin/delete?username=carlos

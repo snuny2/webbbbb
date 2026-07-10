@@ -1,0 +1,74 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. ftp 로그인
+ftp htb_ip 후 anonymous 입력
+ls 로 파일 확인 후 get 명령어로 계정 파일 다운로드
+
+
+3. 계정 파일 확인
+cat 다운받은 파일
+
+
+4. 웹 접속 후 로그인
+http://htb_ip 로 접속 후 login.php 로 이동
+이동 후 아이디 비밀번호 입력
+flag 확인
+
+
+-------------------------------
+
+
+1. What Nmap scanning switch employs the use of default scripts during a scan?
+Nmap 스캔 스위치 중 스캔 중에 기본 스크립트를 사용하는 스위치는 무엇입니까?
+
+> -sC
+
+
+2. What service version is found to be running on port 21?
+21번 포트에서 실행 중인 서비스 버전은 무엇입니까?
+
+> vsftpd 3.0.3
+
+
+3. What FTP code is returned to us for the "Anonymous FTP login allowed" message?
+"익명 FTP 로그인 허용됨" 메시지에 대해 어떤 FTP 코드가 반환됩니까?
+
+> 230
+
+
+4. After connecting to the FTP server using the ftp client, what username do we provide when prompted to log in anonymously?
+FTP 클라이언트를 사용하여 FTP 서버에 연결한 후, 익명으로 로그인하라는 메시지가 나타나면 어떤 사용자 이름을 입력해야 합니까?
+
+> anonymous
+
+
+5. After connecting to the FTP server anonymously, what command can we use to download the files we find on the FTP server?
+FTP 서버에 익명으로 접속한 후, 서버에 있는 파일을 다운로드하려면 어떤 명령어를 사용해야 할까요?
+
+> get
+
+
+6. What is one of the higher-privilege sounding usernames in 'allowed.userlist' that we download from the FTP server?
+FTP 서버에서 다운로드한 'allowed.userlist' 파일에서 권한이 높아 보이는 사용자 이름은 무엇인가요?
+
+> admin
+
+
+7. What version of Apache HTTP Server is running on the target host?
+대상 호스트에서 실행 중인 Apache HTTP 서버 버전은 무엇입니까?
+
+> Apache httpd 2.4.41
+
+
+8. What switch can we use with Gobuster to specify we are looking for specific filetypes?
+Gobuster에서 특정 파일 형식을 찾도록 지정하려면 어떤 스위치를 사용해야 하나요?
+
+> -x
+
+
+9. Which PHP file can we identify with directory brute force that will provide the opportunity to authenticate to the web service?
+디렉토리 무차별 대입 공격을 통해 웹 서비스에 인증할 수 있는 PHP 파일을 찾아낼 수 있을까요?
+
+> login.php

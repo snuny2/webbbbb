@@ -1,0 +1,71 @@
+ip를 못찾는 오류가 발생하여 vpn연결에 필요한 파일인 TCP 443을 받아 해결
+
+
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 웹 접속
+http://htb_ip
+Security Snapshot 로 이동
+http://htb_ip/data/1 > 0으로 변경 후 화면 아래 다운로드 누르기
+
+
+3. 다운로드한 파일 확인
+유저 이름과 비밀번호 확인
+로그인 시도
+ssh 유저 이름@htb_ip
+플래그 찾기
+
+
+4. 루트 권한 얻기
+python3 -c 'import os; os.setuid(0); os.system("/bin/bash")'
+플래그 찾기
+
+
+-------------------------------
+
+
+1. How many TCP ports are open?
+열려 있는 TCP 포트는 몇 개입니까?
+
+> 3
+
+
+2. After running a "Security Snapshot", the browser is redirected to a path of the format /[something]/[id], where [id] represents the id number of the scan. What is the [something]?
+"보안 스냅샷"을 실행한 후 브라우저는 형식의 경로로 리디렉션됩니다 . /[something]/[id]여기서 는 [id]스캔의 ID 번호를 나타냅니다. 는 무엇입니까 [something]?
+
+> data
+
+
+3. Are you able to get to other users' scans?
+다른 사용자의 스캔 파일을 볼 수 있나요?
+
+> yes
+
+
+4. What is the ID of the PCAP file that contains sensative data?
+민감한 데이터가 포함된 PCAP 파일의 ID는 무엇입니까?
+
+> 0
+
+
+5. Which application layer protocol in the pcap file can the sensetive data be found in?
+pcap 파일에서 민감한 데이터는 어떤 애플리케이션 계층 프로토콜에서 찾을 수 있습니까?
+
+> ftp
+
+
+6. We've managed to collect nathan's FTP password. On what other service does this password work?
+네이선의 FTP 비밀번호를 알아냈습니다. 이 비밀번호로 다른 어떤 서비스에 접속할 수 있나요?
+
+> ssh
+
+
+7. X
+
+
+8. What is the full path to the binary on this machine has special capabilities that can be abused to obtain root privileges?
+루트 권한을 획득하는 데 악용될 수 있는 특수 기능을 가진 이 시스템의 바이너리 파일 전체 경로는 무엇입니까?
+
+> /usr/bin/python3.8

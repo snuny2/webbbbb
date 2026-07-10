@@ -39,6 +39,10 @@ export class AuthService {
     async regresh(token: string) {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const decoded = await this.jwt.verifyAsync(token).catch(() => null);
+        if (!decoded) {
+            // ← 이 체크 추가
+            throw new UnauthorizedException('유효하지 않은 토큰입니다.');
+        }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         const payload = { sub: decoded.sub, userId: decoded.userId, name: decoded.name };
         const accessToken = await this.jwt.signAsync(payload, { expiresIn: 60 * 15 });

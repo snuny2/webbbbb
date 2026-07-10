@@ -1,0 +1,40 @@
+JWT 구조
+[Header].[Payload].[Signature]
+헤더.페이로드.서명
+
+1) Lab: JWT authentication bypass via unverified signature
+> 기본 인증 우회
+
+1. 페이지 확인
+
+2. 로그인 후 세션확인
+> .으로 구분되어 있고, 여러 정보가 있음
+암호화 방식, 로그인 아이디 등
+
+3. 세션 변경
+로그인한 아이디를 admin으로 변경
+> 안됨, administrator로 해야하는 듯함
+administrator로 변경
+> 로그인 화면으로 넘어감
+
+4. /admin으로 이동
+carlos삭제
+
+
+2) Lab: JWT authentication bypass via flawed signature verification
+JWT 인증 우회
+
+1. 로그인 후 세션확인
+> .으로 구분되어 있고, 여러 정보가 있음
+암호화 방식, 로그인 아이디 등
+
+2. 세션 변경
+로그인한 아이디를 admin으로 변경
+> 안됨, administrator로 해야하는 듯함
+administrator로 변경
+> 로그인 화면으로 넘어감
+
+3. /admin으로 이동
+> 관리자만 할 수있다는 문구가 계속 남아있음
+> alg를 none로 변경 및 Signature부분 지우기
+carlos삭제

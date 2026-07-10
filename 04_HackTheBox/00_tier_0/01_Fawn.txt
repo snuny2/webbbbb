@@ -1,0 +1,86 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 서버 접속
+ftp htb_ip
+
+
+3. 서버에 로그인
+name: anonymous
+password: 빈칸인 채로 엔터
+
+
+4. 파일 확인
+ls
+get 파일이름 으로 파일다운
+exit로 나간 뒤 cat 파일이름으로 확인
+
+
+-------------------------------
+
+
+1. What does the 3-letter acronym FTP stand for?
+FTP라는 세 글자 약자는 무엇을 의미하나요?
+
+> File Transfer Protocol
+
+
+2. Which port does the FTP service listen on usually?
+FTP 서비스는 일반적으로 어떤 포트를 사용하나요?
+
+> 21
+
+
+3. FTP sends data in the clear, without any encryption. What acronym is used for a later protocol designed to provide similar functionality to FTP but securely, as an extension of the SSH protocol?
+FTP는 암호화 없이 데이터를 암호화되지 않은 상태로 전송합니다. FTP와 유사한 기능을 제공하지만 더 안전하게 사용하도록 설계된 SSH 프로토콜의 후속 프로토콜을 나타내는 약어는 무엇입니까?
+
+> SFTP
+
+
+4. What is the command we can use to send an ICMP echo request to test our connection to the target?
+대상과의 연결을 테스트하기 위해 ICMP 에코 요청을 보내는 데 사용할 수 있는 명령어는 무엇입니까?
+
+> ping
+
+
+5. From your scans, what version is FTP running on the target?
+스캔 결과에 따르면 대상 시스템에서 실행 중인 FTP 버전은 무엇입니까?
+
+> vsftpd 3.0.3
+
+
+6. From your scans, what OS type is running on the target?
+스캔 결과에 따르면 대상 시스템에서 실행 중인 운영 체제 유형은 무엇입니까?
+
+> Unix
+
+
+7. What is the command we need to run in order to display the 'ftp' client help menu?
+'ftp' 클라이언트 도움말 메뉴를 표시하려면 어떤 명령어를 실행해야 합니까?
+
+> ftp -?
+
+
+8. What is username that is used over FTP when you want to log in without having an account?
+계정 없이 FTP에 로그인할 때 사용하는 사용자 이름은 무엇인가요?
+
+> anonymous
+
+
+9. What is the response code we get for the FTP message 'Login successful'?
+FTP 메시지 '로그인 성공'에 대한 응답 코드는 무엇입니까?
+
+> 230
+
+
+10. There are a couple of commands we can use to list the files and directories available on the FTP server. One is dir. What is the other that is a common way to list files on a Linux system.
+FTP 서버에서 사용 가능한 파일과 디렉터리 목록을 표시하는 데 사용할 수 있는 명령어가 몇 가지 있습니다. 그중 하나는 `dir`입니다. 그렇다면 리눅스 시스템에서 파일 목록을 표시하는 데 일반적으로 사용되는 다른 명령어는 무엇일까요?
+
+> ls
+
+
+11. What is the command used to download the file we found on the FTP server?
+FTP 서버에서 찾은 파일을 다운로드하는 데 사용되는 명령어는 무엇입니까?
+
+> get

@@ -1,0 +1,31 @@
+1) Lab: Reflected XSS into HTML context with nothing encoded
+> 기초 XSS
+
+1. 검색창에 검색
+
+2. 검색창에 스크립트 삽입
+<script>alert(1)</script>
+
+
+2) Lab: Stored XSS into HTML context with nothing encoded
+> 댓글 XSS
+
+1. 댓글 등록
+
+2. 내용에 스크립트 삽입 (이름에도 삽입했지만 나오진않음)
+<script>alert(1)</script>
+
+
+3) Lab: DOM XSS in document.write sink using source location.search
+> DOM XSS
+
+1. 검색창에 입력
+
+2. 검색 창에 스크립트 삽입
+<script>alert(1)</script>
+
+3. 안되는걸 보고 개발자 모드로 페이지의 코드 확인
+
+4. 검색어를 보여주니, 나온 위치에 맞게 코드 변경
+이미지 태그로 되어있으니 이미지 태그를 닫고 스크립트 삽입
+"> <script>alert(1)</script>

