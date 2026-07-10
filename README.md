@@ -2,6 +2,8 @@
 
 웹 애플리케이션 보안 학습 및 실습 기록 저장소입니다.
 
+📒 **상세 풀이 및 학습 기록** → [노션 포트폴리오](https://www.notion.so/3583db1a3bf181e6870affd1154f7be6)
+
 ---
 
 ## 학습 기간
@@ -91,14 +93,6 @@
 | Web Gauntlet 2 | Medium | SQLi 필터 우회 (not glob) |
 | Web Gauntlet 3 | Medium | SQLi 필터 우회 (not glob) |
 | WebSockFish | Medium | WebSocket 점수 조작 |
-
----
-
-## 학습 기록 (Notion)
-
-상세 풀이 및 정리 내용은 노션 포트폴리오에서 확인할 수 있습니다.
-
-👉 [웹 펜테스팅 포트폴리오 노션](https://www.notion.so/3583db1a3bf181e6870affd1154f7be6)
 
 ---
 
